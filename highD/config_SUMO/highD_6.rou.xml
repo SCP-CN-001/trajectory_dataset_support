@@ -1,0 +1,9 @@
+<routes>
+
+    <route id="1" edges="1_r 1_l" />
+    <route id="2" edges="2" />
+
+    <vType id="Car" carFollowModel="W99" guiShape="passenger" />
+    <vType id="Truck" vClass="truck" carFollowModel="W99" guiShape="truck" />
+
+</routes>
