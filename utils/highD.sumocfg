@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <lateral-resolution value="4.4" />
+     <input>
+        <net-file value="../highD/map_SUMO/highD_4.net.xml" />
+        <route-files value="highD.rou.xml" />
+    </input>
+
+    <time>
+        <begin value="0" />
+        <step-length value="0.04" />
+        <end value = "10000" />
+    </time>
+
+    <gui_only>
+        <gui-settings-file value="visualisation.settings" />
+    </gui_only>
+
+</configuration>

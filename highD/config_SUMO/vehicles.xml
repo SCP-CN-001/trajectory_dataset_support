@@ -1,0 +1,15 @@
+<routes>
+
+    <vType id="A00" length="3.85" width="1.72" height="1.41" carFollowModel="W99" guiShape="passenger" />
+    <vType id="A0" length="4.03" width="1.74" height="1.43" carFollowModel="W99" guiShape="passenger" />
+    <vType id="A" length="4.42" width="1.79" height="1.41" carFollowModel="W99" guiShape="passenger" />
+    <vType id="B" length="4.71" width="1.83" height="1.44" carFollowModel="W99" guiShape="passenger" />
+    <vType id="C" length="5.01" width="1.86" height="1.48" carFollowModel="W99" guiShape="passenger" />
+    <vType id="D" length="5.3" width="1.94" height="1.48" carFollowModel="W99" guiShape="passenger" />
+
+    <vType id="delivery" vClass="delivery" carFollowModel="W99" guiShape="delivery"/>
+    <vType id="truck" vClass="truck" carFollowModel="W99" guiShape="truck" />
+    <vType id="semitrailer" vClass="trailer" carFollowModel="W99" guiShape="truck/semitrailer" />
+    <vType id="trailer" vClass="trailer" carFollowModel="W99" guiShape="truck/trailer" />
+
+</routes>
