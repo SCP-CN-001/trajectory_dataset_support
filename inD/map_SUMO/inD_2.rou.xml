@@ -1,0 +1,19 @@
+<routes>
+
+    <route id="1_main" edges="1_main_0 1_main_1" />
+    <route id="1_main_1_sub" edges="1_main_0 1_sub_0" />
+    <route id="1_main_2_sub" edges="1_main_0 2_sub_0" />
+
+    <route id="2_main" edges="2_main_0 2_main_1" />
+    <route id="2_main_1_sub" edges="2_main_0 1_sub_0" />
+    <route id="2_main_2_sub" edges="2_main_0 2_sub_0" />
+
+    <route id="1_sub_2_sub" edges="1_sub_1 2_sub_0" />
+    <route id="1_sub_1_main" edges="1_sub_1 1_main_1" />
+    <route id="1_sub_2_main" edges="1_sub_1 2_main_1" />
+
+    <route id="2_sub_1_sub" edges="2_sub_1 1_sub_0" />
+    <route id="2_sub_1_main" edges="2_sub_1 1_main_1" />
+    <route id="2_sub_2_main" edges="2_sub_1 2_main_1" />
+
+</routes>

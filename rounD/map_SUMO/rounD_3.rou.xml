@@ -1,0 +1,28 @@
+<routes>
+
+    <route id="01" edges="in_0 in_01 round_01 out_1 out_11" />
+    <route id="02" edges="in_0 in_01 round_01 round_11 round_12 out_2" />
+    <route id="03" edges="in_0 in_01 round_01 round_11 round_12 round_22 round_23 out_3 out_31" />
+    <route id="00" edges="in_0 in_01 round_01 round_11 round_12 round_22 round_23  round_33 round_30 out_0" />
+
+    <route id="12" edges="in_1 in_12 round_12 out_2" />
+    <route id="13" edges="in_1 in_12 round_12 round_22 round_23 out_3 out_31" />
+    <route id="10" edges="in_1 in_12 round_12 round_22 round_23 round_33 round_30 out_0" />
+    <route id="11" edges="in_1 in_12 round_12 round_22 round_23 round_33 round_30 round_00 round_01 out_1 out_11" />
+
+    <route id="23" edges="in_2 round_23 out_3 out_31" />
+    <route id="20" edges="in_2 round_23 round_33 round_30 out_0" />
+    <route id="21" edges="in_2 round_23 round_33 round_30 round_00 round_01 out_1 out_11" />
+    <route id="22" edges="in_2 round_23 round_33 round_30 round_00 round_01 round_11 round_12 out_2" />
+
+    <route id="30" edges="in_3 in_31 round_30 out_0" />
+    <route id="31" edges="in_3 in_31 round_30 round_00 round_01 out_1 out_11" />
+    <route id="32" edges="in_3 in_31 round_30 round_00 round_01 round_11 round_12 out_2" />
+    <route id="33" edges="in_3 in_31 round_30 round_00 round_01 round_11 round_12 round_22 round_23 out_3 out_31" />
+
+    <route id="01_d" edges="in_0 in_02 out_11" />
+    <route id="12_d" edges="in_1 in_13" />
+    <route id="23_d" edges="in_22 out_31" />
+    <route id="30_d" edges="in_3 in_32" />
+
+</routes>

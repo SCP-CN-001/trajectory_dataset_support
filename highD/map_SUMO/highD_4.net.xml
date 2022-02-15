@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2021-12-07 17:40:08 by Eclipse SUMO netedit Version v1_11_0+0041-46d25eca05a
+<!-- generated on 2022-02-11 12:54:10 by Eclipse SUMO netedit Version v1_11_0+0041-46d25eca05a
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
@@ -43,20 +43,20 @@
 
     <type id="edgeType_0" speed="20.00" width="3.00"/>
 
-    <edge id="1" from="gneJ2" to="gneJ3" priority="-1" type="edgeType_0">
-        <lane id="1_0" index="0" speed="20.00" length="440.00" width="3.86" shape="440.00,44.43 0.00,44.43"/>
-        <lane id="1_1" index="1" speed="20.00" length="440.00" width="3.86" shape="440.00,40.57 0.00,40.57"/>
-        <lane id="1_2" index="2" speed="20.00" length="440.00" width="3.86" shape="440.00,36.71 0.00,36.71"/>
+    <edge id="1_main_0" from="gneJ2" to="gneJ3" priority="-1" type="edgeType_0">
+        <lane id="1_main_0_0" index="0" speed="100.00" length="440.00" width="3.86" shape="440.00,44.43 0.00,44.43"/>
+        <lane id="1_main_0_1" index="1" speed="100.00" length="440.00" width="3.86" shape="440.00,40.57 0.00,40.57"/>
+        <lane id="1_main_0_2" index="2" speed="100.00" length="440.00" width="3.86" shape="440.00,36.71 0.00,36.71"/>
     </edge>
-    <edge id="2" from="gneJ0" to="gneJ1" priority="-1" type="edgeType_0">
-        <lane id="2_0" index="0" speed="20.00" length="440.00" width="3.86" shape="0.00,19.47 440.00,19.47"/>
-        <lane id="2_1" index="1" speed="20.00" length="440.00" width="3.86" shape="0.00,23.33 440.00,23.33"/>
-        <lane id="2_2" index="2" speed="20.00" length="440.00" width="3.86" shape="0.00,27.19 440.00,27.19"/>
+    <edge id="2_main_0" from="gneJ0" to="gneJ1" priority="-1" type="edgeType_0">
+        <lane id="2_main_0_0" index="0" speed="100.00" length="440.00" width="3.86" shape="0.00,19.47 440.00,19.47"/>
+        <lane id="2_main_0_1" index="1" speed="100.00" length="440.00" width="3.86" shape="0.00,23.33 440.00,23.33"/>
+        <lane id="2_main_0_2" index="2" speed="100.00" length="440.00" width="3.86" shape="0.00,27.19 440.00,27.19"/>
     </edge>
 
     <junction id="gneJ0" type="dead_end" x="0.00" y="29.12" incLanes="" intLanes="" shape="0.00,29.12 0.00,17.54"/>
-    <junction id="gneJ1" type="dead_end" x="440.00" y="29.12" incLanes="2_0 2_1 2_2" intLanes="" shape="440.00,17.54 440.00,29.12"/>
+    <junction id="gneJ1" type="dead_end" x="440.00" y="29.12" incLanes="2_main_0_0 2_main_0_1 2_main_0_2" intLanes="" shape="440.00,17.54 440.00,29.12"/>
     <junction id="gneJ2" type="dead_end" x="440.00" y="34.78" incLanes="" intLanes="" shape="440.00,34.78 440.00,46.36"/>
-    <junction id="gneJ3" type="dead_end" x="0.00" y="34.78" incLanes="1_0 1_1 1_2" intLanes="" shape="0.00,46.36 0.00,34.78"/>
+    <junction id="gneJ3" type="dead_end" x="0.00" y="34.78" incLanes="1_main_0_0 1_main_0_1 1_main_0_2" intLanes="" shape="0.00,46.36 0.00,34.78"/>
 
 </net>

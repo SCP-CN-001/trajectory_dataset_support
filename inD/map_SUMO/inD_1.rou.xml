@@ -1,0 +1,11 @@
+<routes>
+
+    <route id="1_main" edges="1_main_0 1_main_1 1_main_2 1_main_3" />
+    <route id="1_sub_1_main" edges="1_sub_0 1_sub_1 1_main_2 1_main_3" />
+    <route id="2_sub_1_main" edges="1_main_0 2_sub_2 2_sub_0" />
+
+    <route id="2_main" edges="2_main_0 2_main_1 2_main_2 2_main_3" />
+    <route id="1_sub_2_main" edges="1_sub_0 1_sub_2 2_main_3" />
+    <route id="2_main_2_sub" edges="2_main_0 2_main_1 2_sub_1 2_sub_0" />
+
+</routes>
