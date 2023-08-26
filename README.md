@@ -1,23 +1,40 @@
 # Trajectory Data Support
 
+[![Github license](https://img.shields.io/github/license/WoodOxen/tactics2d)](https://github.com/WoodOxen/tactics2d/blob/dev/LICENSE)
+
 ## About
 
 This repository provides **third-party** map data and script-based support for the open trajectory datasets, including NGSIM, LevelXdata (highD, inD, rounD, uniD, and exiD), Interaction, and Dragon Lake Park (DLP).
 
-Due to the license of the open datasets, this repository cannot distribute the trajectory data in any form. Please contact the authors to apply for the download links.
+Due to the license of the open datasets, this repository cannot distribute the trajectory data in any form. Please contact the dataset owners to apply for the download links.
+
+## Folder Structure
+
+```shell
+.
+├── img
+│   # the map images
+├── map
+│   # the maps, including road network format and lanelet2 format
+├── trajectory
+│   # the trajectory data samples. Please contact the dataset owners for the complete dataset!
+├── trajectory_data_analysis
+│   # the official and personal analysis of the trajectory data
+└── utils
+```
 
 ## Dataset Overview
 
-| Dataset | Scenario Type | # Map | # Trajectory | Duration (h) | Frequency (Hz) |
-| --- | --- | --- | --- | --- | --- |
-| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | | 2 | 9206 |  1.5 | 10 |
-| [highD](https://www.highd-dataset.com/) | Highway | 6 | 110000 | 16.5 | 25 |
-| [inD](https://www.ind-dataset.com/) | Intersection | 4 | 11500 | 10 | 25 |
-| [rounD](https://www.round-dataset.com/) | Roundabout | 3 | 13746 | 6 | 25 |
-| [uniD](https://www.unid-dataset.com/) | Intersection | 1 | |
-| [exiD](https://www.exid-dataset.com/) | Highway | 7 | 69172 | 16 | 25 | 
-| [INTERACTION](http://interaction-dataset.com/) | Merging, roundabout, intersection | 10 | 10450 | 16.5 | 10 |
-| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | Parking | 1 | 5188 | 3.5 | 25 |
+| Dataset | Publish | Scenario Type | # Map | # Trajectory | Duration (h) | Frequency (Hz) |
+| --- | --- | --- | --- | --- | --- | --- |
+| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) |  | | 2 | 9206 |  1.5 | 10 |
+| [highD](https://www.highd-dataset.com/) | 2018 |  Highway | 6 | 110000 | 16.5 | 25 |
+| [inD](https://www.ind-dataset.com/) | 2020 | Intersection | 4 | 11500 | 10 | 25 |
+| [rounD](https://www.round-dataset.com/) | 2020 | Roundabout | 3 | 13746 | 6 | 25 |
+| [uniD](https://www.unid-dataset.com/) | 2022 | Intersection | 1 | | | 25 |
+| [exiD](https://www.exid-dataset.com/) | 2023 | Highway | 7 | 69172 | 16 | 25 |
+| [INTERACTION](http://interaction-dataset.com/) | 2019 | Merging, roundabout, </br> intersection | 10 | 10450 | 16.5 | 10 |
+| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | 2022 | Parking | 1 | 5188 | 3.5 | 25 |
 
 ## Progress
 
@@ -78,6 +95,13 @@ This repository provides SUMO-style road network, lanelet2 style maps, trajector
     pages={958--964},
     year={2022},
     organization={IEEE}
+}
+
+@article{zhan2019interaction,
+    title={Interaction dataset: An international, adversarial and cooperative motion dataset in interactive driving scenarios with semantic maps},
+    author={Zhan, Wei and Sun, Liting and Wang, Di and Shi, Haojie and Clausse, Aubrey and Naumann, Maximilian and Kummerle, Julius and Konigshof, Hendrik and Stiller, Christoph and de La Fortelle, Arnaud and others},
+    journal={arXiv preprint arXiv:1910.03088},
+    year={2019}
 }
 
 @INPROCEEDINGS{9922162,
