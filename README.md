@@ -16,8 +16,9 @@ Due to the license of the open datasets, this repository cannot distribute the t
 │   # the map images
 ├── map
 │   # the maps, including road network format and lanelet2 format
-├── trajectory
-│   # the trajectory data samples. Please contact the dataset owners for the complete dataset!
+├── trajectory_sample
+│   # the trajectory data samples.
+│   # Please contact the dataset owners for the complete dataset!
 ├── trajectory_data_analysis
 │   # the official and personal analysis of the trajectory data
 └── utils
@@ -25,31 +26,33 @@ Due to the license of the open datasets, this repository cannot distribute the t
 
 ## Dataset Overview
 
-| Dataset | Publish | Scenario Type | # Map | # Trajectory | Duration (h) | Frequency (Hz) |
+Here are some basic information about the open trajectory datasets.
+
+| Dataset | Publish | Scenario | # Map | # Trajectory | Duration (h) | Frequency (Hz) |
 | --- | --- | --- | --- | --- | --- | --- |
-| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) |  | | 2 | 9206 |  1.5 | 10 |
+| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) |  | Highway, </br> intersection | 2 | 9206 |  2.5 | 10 |
 | [highD](https://www.highd-dataset.com/) | 2018 |  Highway | 6 | 110000 | 16.5 | 25 |
 | [inD](https://www.ind-dataset.com/) | 2020 | Intersection | 4 | 11500 | 10 | 25 |
 | [rounD](https://www.round-dataset.com/) | 2020 | Roundabout | 3 | 13746 | 6 | 25 |
 | [uniD](https://www.unid-dataset.com/) | 2022 | Intersection | 1 | | | 25 |
 | [exiD](https://www.exid-dataset.com/) | 2023 | Highway | 7 | 69172 | 16 | 25 |
-| [INTERACTION](http://interaction-dataset.com/) | 2019 | Merging, roundabout, </br> intersection | 10 | 10450 | 16.5 | 10 |
+| [INTERACTION](http://interaction-dataset.com/) | 2019 | Merging, </br> roundabout, </br> intersection | 10 | 10450 | 16.5 | 10 |
 | [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | 2022 | Parking | 1 | 5188 | 3.5 | 25 |
 
 ## Progress
 
 This repository provides SUMO-style road network, lanelet2 style maps, trajectory data insight of the datasets. Here is the current progress of the construction.
 
-| Dataset | SUMO Road Network | [Lanelet2](https://github.com/fzi-forschungszentrum-informatik/Lanelet2) Map | Data Insight |
-| --- | --- | --- | --- |
-| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | | | $\surd$ ([official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj))
-| [highD](https://www.highd-dataset.com/) | $\surd$ | $\surd$ | $\surd$ |
-| [inD](https://www.ind-dataset.com/) | $\surd$ | $\surd$ | $\surd$ |
-| [rounD](https://www.round-dataset.com/) | $\surd$ | $\surd$ | $\surd$ |
-| [uniD](https://www.unid-dataset.com/) | |||
-| [exiD](https://www.exid-dataset.com/) ||||
+| Dataset | Map images | SUMO </br> road network | [Lanelet2](https://github.com/fzi-forschungszentrum-informatik/Lanelet2) map | Trajectory sample | Trajectory data analysis |
+| --- | --- | --- | --- | --- | --- |
+| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | $\surd$ | | | | $\surd$ ([official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj))
+| [highD](https://www.highd-dataset.com/) | $\surd$ | |
+| [inD](https://www.ind-dataset.com/) | $\surd$ |
+| [rounD](https://www.round-dataset.com/) | $\surd$ |||
+| [uniD](https://www.unid-dataset.com/) | $\surd$ |  ||
+| [exiD](https://www.exid-dataset.com/) | $\surd$ |||
 | [INTERACTION](http://interaction-dataset.com/) | $\surd$ | ||
-| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | | ||
+| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | $\surd$ | ||
 
 ## Citation
 
