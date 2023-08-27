@@ -45,14 +45,14 @@ This repository provides SUMO-style road network, lanelet2 style maps, trajector
 
 | Dataset | Map images | SUMO </br> road network | [Lanelet2](https://github.com/fzi-forschungszentrum-informatik/Lanelet2) map | Trajectory sample | Trajectory data analysis |
 | --- | --- | --- | --- | --- | --- |
-| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | $\surd$ | | | | $\surd$ ([official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj))
-| [highD](https://www.highd-dataset.com/) | $\surd$ | |
-| [inD](https://www.ind-dataset.com/) | $\surd$ |
-| [rounD](https://www.round-dataset.com/) | $\surd$ |||
-| [uniD](https://www.unid-dataset.com/) | $\surd$ |  ||
-| [exiD](https://www.exid-dataset.com/) | $\surd$ |||
-| [INTERACTION](http://interaction-dataset.com/) | $\surd$ | ||
-| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | $\surd$ | ||
+| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | $\surd$ | | | [official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj) | $\surd$ ([official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj))
+| [highD](https://www.highd-dataset.com/) | $\surd$ | | | $\surd$ ||
+| [inD](https://www.ind-dataset.com/) | $\surd$ | || $\surd$ ||
+| [rounD](https://www.round-dataset.com/) | $\surd$ ||| $\surd$ | |
+| [uniD](https://www.unid-dataset.com/) | $\surd$ |  || $\surd$ | |
+| [exiD](https://www.exid-dataset.com/) | $\surd$ ||| $\surd$ | |
+| [INTERACTION](http://interaction-dataset.com/) | $\surd$ | || $\surd$ | |
+| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | $\surd$ | || $\surd$ | |
 
 ## Citation
 
