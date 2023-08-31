@@ -30,13 +30,13 @@ Here are some basic information about the open trajectory datasets.
 
 | Dataset | Publish | Scenario | # Map | # Trajectory | Duration (h) | Frequency (Hz) |
 | --- | --- | --- | --- | --- | --- | --- |
-| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) |  | Highway, </br> intersection | 2 | 9206 |  2.5 | 10 |
+| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) |  | Highway, </br> intersection | 2 | 9206 | 2.5 | 10 |
 | [highD](https://www.highd-dataset.com/) | 2018 |  Highway | 6 | 110000 | 16.5 | 25 |
 | [inD](https://www.ind-dataset.com/) | 2020 | Intersection | 4 | 11500 | 10 | 25 |
 | [rounD](https://www.round-dataset.com/) | 2020 | Roundabout | 3 | 13746 | 6 | 25 |
-| [uniD](https://www.unid-dataset.com/) | 2022 | Intersection | 1 | | | 25 |
-| [exiD](https://www.exid-dataset.com/) | 2023 | Highway | 7 | 69172 | 16 | 25 |
-| [INTERACTION](http://interaction-dataset.com/) | 2019 | Merging, </br> roundabout, </br> intersection | 10 | 10450 | 16.5 | 10 |
+| [exiD](https://www.exid-dataset.com/) | 2022 | Highway | 7 | 69172 | 16 | 25 |
+| [uniD](https://www.unid-dataset.com/) | 2023 | Intersection | 1 | | | 25 |
+| [INTERACTION](http://interaction-dataset.com/) | 2019 | Merging, </br> roundabout, </br> intersection | 11 | 40054 | 16.5 | 10 |
 | [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | 2022 | Parking | 1 | 5188 | 3.5 | 25 |
 
 ## Progress
@@ -46,13 +46,13 @@ This repository provides SUMO-style road network, lanelet2 style maps, trajector
 | Dataset | Map images | SUMO </br> road network | [Lanelet2](https://github.com/fzi-forschungszentrum-informatik/Lanelet2) map | Trajectory sample | Trajectory data analysis |
 | --- | --- | --- | --- | --- | --- |
 | [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | $\surd$ | | | [official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj) | $\surd$ ([official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj))
-| [highD](https://www.highd-dataset.com/) | $\surd$ | | | $\surd$ ||
-| [inD](https://www.ind-dataset.com/) | $\surd$ | || $\surd$ ||
-| [rounD](https://www.round-dataset.com/) | $\surd$ ||| $\surd$ | |
+| [highD](https://www.highd-dataset.com/) | $\surd$ | $\surd$ | $\surd$ | $\surd$ ||
+| [inD](https://www.ind-dataset.com/) | $\surd$ | $\surd$ | $\surd$ | $\surd$ ||
+| [rounD](https://www.round-dataset.com/) | $\surd$ | $\surd$ | $\surd$ | $\surd$ | |
+| [exiD](https://www.exid-dataset.com/) | $\surd$ |  | $\surd$ | $\surd$ | |
 | [uniD](https://www.unid-dataset.com/) | $\surd$ |  || $\surd$ | |
-| [exiD](https://www.exid-dataset.com/) | $\surd$ ||| $\surd$ | |
 | [INTERACTION](http://interaction-dataset.com/) | $\surd$ | || $\surd$ | |
-| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | $\surd$ | || $\surd$ | |
+| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | $\surd$ | | $\surd$ | $\surd$ | |
 
 ## Citation
 
