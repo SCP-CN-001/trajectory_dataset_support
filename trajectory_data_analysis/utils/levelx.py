@@ -1,11 +1,9 @@
 import os
 import json
-import time
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-from matplotlib.colors import ListedColormap
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -122,6 +120,9 @@ def plot_map_and_trajectories(map_name, data_path, img_path, transform, type_ord
         legend=True,
         ax=ax,
     )
+    plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
+    ax.set_xlabel(None)
+    ax.set_ylabel(None)
     plt.legend(bbox_to_anchor=(1.0, 1.0), loc="upper left")
     plt.show()
 
@@ -179,7 +180,7 @@ def plot_mean_speed_distribution(dataset, data_path, type_order, configs):
         df,
         col="map",
         col_wrap=2,
-        sharex=True,
+        sharex=False,
         sharey=True,
         height=2,
         aspect=1.5,
@@ -192,19 +193,136 @@ def plot_mean_speed_distribution(dataset, data_path, type_order, configs):
     plt.show()
 
 
-def plot_angle_distribution(dataset, data_path, type, configs):
+def plot_speed_distribution(map_name, map_range, data_path, type: str, configs: dict):
+    dataset = configs[map_name]["dataset"]
+    x_min, x_max, y_min, y_max = map_range
+    matrix_x = int((x_max - x_min) * 10)
+    matrix_y = int((y_max - y_min) * 10)
+    speed_map = np.zeros([matrix_y, matrix_x, 2])
+
+    for file_id in configs[map_name]["trajectory_files"]:
+        trajectory_path = os.path.join(data_path, "%02d_tracks.csv" % file_id)
+        df_trajectory = pd.read_csv(trajectory_path, chunksize=100000)
+        trajectory_metadata_path = os.path.join(data_path, "%02d_tracksMeta.csv" % file_id)
+        df_meta = pd.read_csv(trajectory_metadata_path)
+
+        type_dict = dict()
+        for _, line in df_meta.iterrows():
+            type_dict[int(line[column_name[dataset]["id"]])] = line["class"]
+
+        for chunk in df_trajectory:
+            for _, line in chunk.iterrows():
+                if type_dict[int(line[column_name[dataset]["id"]])] != type:
+                    continue
+
+                x = int((line[column_name[dataset]["x"]] - x_min) * 10)
+                y = int((line[column_name[dataset]["y"]] - y_min) * 10)
+                if x < 0 or x >= matrix_x or y < 0 or y >= matrix_y:
+                    continue
+                speed_map[y, x, 0] += np.sqrt(
+                    line[column_name[dataset]["vx"]] ** 2 + line[column_name[dataset]["vy"]] ** 2
+                )
+                speed_map[y, x, 1] += 1
+
+    speed_map[:, :, 0] /= speed_map[:, :, 1]
+
+    if x_max < 0:
+        speed_map = np.flip(speed_map, axis=1)
+    if y_max < 0:
+        speed_map = np.flip(speed_map, axis=0)
+
+    plt.imshow(speed_map[:, :, 0], cmap="cool", vmin=0)
+    plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
+    plt.gcf().set_figwidth(8)
+    plt.colorbar()
+    plt.show()
+
+
+def plot_log_angle_distribution(map_name, data_path, type, configs):
+    dataset = configs[map_name]["dataset"]
+    bin_num = 72
+    theta = np.linspace(0.0, 2 * np.pi, bin_num, endpoint=False)
+    radii = np.zeros(bin_num)
+
     for key, value in configs.items():
         if not dataset in key:
             continue
-        
-        heading_list = list()
+
         for file_id in value["trajectory_files"]:
             trajectory_path = os.path.join(data_path, "%02d_tracks.csv" % file_id)
             df_trajectory = pd.read_csv(trajectory_path, chunksize=100000)
-            
+            trajectory_metadata_path = os.path.join(data_path, "%02d_tracksMeta.csv" % file_id)
+            df_meta = pd.read_csv(trajectory_metadata_path)
+
+            type_dict = dict()
+            for _, line in df_meta.iterrows():
+                type_dict[int(line[column_name[dataset]["id"]])] = line["class"]
+
+            for chunk in df_trajectory:
+                for _, line in chunk.iterrows():
+                    if type_dict[int(line[column_name[dataset]["id"]])] != type:
+                        continue
+
+                    radii[int(np.floor(line["heading"] / (360 / bin_num)) % bin_num)] += 1
+
+    ax = plt.subplot(111, polar=True)
+    bars = ax.bar(theta, np.log10(radii), width=2 * np.pi / bin_num, bottom=4)
+    for r, bar in zip(radii, bars):
+        bar.set_facecolor("turquoise")
+        bar.set_alpha(0.5)
+    plt.gcf().set_size_inches(6, 6)
+    plt.gca().set_title(map_name)
+    plt.show()
 
 
+def plot_delta_angle_distribution(dataset, data_path, type, configs):
+    delta_angles = list()
+    last_angle = None
+    last_id = None
+    for key, value in configs.items():
+        if not dataset in key:
+            continue
 
+        for file_id in value["trajectory_files"]:
+            trajectory_path = os.path.join(data_path, "%02d_tracks.csv" % file_id)
+            df_trajectory = pd.read_csv(trajectory_path, chunksize=100000)
+            trajectory_metadata_path = os.path.join(data_path, "%02d_tracksMeta.csv" % file_id)
+            df_meta = pd.read_csv(trajectory_metadata_path)
+
+            type_dict = dict()
+            for _, line in df_meta.iterrows():
+                type_dict[int(line[column_name[dataset]["id"]])] = line["class"]
+
+            for chunk in df_trajectory:
+                for _, line in chunk.iterrows():
+                    if type_dict[int(line[column_name[dataset]["id"]])] != type:
+                        continue
+
+                    if last_id is None or last_id != int(line[column_name[dataset]["id"]]):
+                        last_id = int(line[column_name[dataset]["id"]])
+                        last_angle = line["heading"] * (np.pi / 180)
+                        continue
+                    else:
+                        current_angle = line["heading"] * (np.pi / 180)
+                        delta_angles.append(
+                            [key, current_angle - last_angle, current_angle, last_angle]
+                        )
+                        last_angle = current_angle
+
+    df = pd.DataFrame(delta_angles, columns=["map", "deltaAngle", "current", "last"])
+    plot = sns.FacetGrid(
+        df,
+        col="map",
+        col_wrap=2,
+        sharex=True,
+        sharey=False,
+        height=2,
+        aspect=1.5,
+        palette="husl",
+    )
+    plot.map(sns.kdeplot, "deltaAngle", fill=True, alpha=0.5)
+    plot.set(xlim=(-np.pi / 2, np.pi / 2))
+    plt.show()
 
 
 def _count_lane_change(trajectory_file_path):
@@ -266,4 +384,9 @@ def plot_lane_change_distribution(dataset, data_path, type_order, configs):
 
 
 if __name__ == "__main__":
-    check_file_ids("../../trajectory/uniD/data", (0, 13))
+    data_path = "../../trajectory/inD/data"
+    with open("../../map/map.config", "r") as f:
+        configs = json.load(f)
+
+    plot_angle_distribution("inD", data_path, "car", configs)
+    # check_file_ids("../../trajectory/uniD/data", (0, 13))
