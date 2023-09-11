@@ -1,5 +1,4 @@
 import os
-import json
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -34,7 +33,7 @@ column_name = {
 }
 
 
-def check_file_ids(data_path, id_range):
+def check_file_ids(data_path: str, id_range: tuple):
     result = dict()
     for i in range(*id_range):
         file_path = os.path.join(data_path, "%02d_recordingMeta.csv" % i)
@@ -46,7 +45,7 @@ def check_file_ids(data_path, id_range):
     print(result)
 
 
-def _merge_dictionary(dict1, dict2):
+def _merge_dictionary(dict1: dict, dict2: dict):
     for key, value in dict2.items():
         if key not in dict1:
             dict1[key] = value
@@ -72,7 +71,14 @@ def _get_plot_range(df: pd.DataFrame):
     return x_min, x_max, y_min, y_max
 
 
-def plot_map_and_trajectories(map_name, data_path, img_path, transform, type_order, configs):
+def plot_map_and_trajectories(
+    map_name: str,
+    data_path: str,
+    img_path: str,
+    transform: mpl.transforms.Affine2D,
+    type_order: list,
+    configs: dict,
+):
     dataset = configs[map_name]["dataset"]
     map_img = mpimg.imread(os.path.join(img_path, map_name + ".png"))
     if dataset != "highD":
@@ -127,7 +133,7 @@ def plot_map_and_trajectories(map_name, data_path, img_path, transform, type_ord
     plt.show()
 
 
-def plot_class_proportion(map_name, data_path, type_order, configs):
+def plot_class_proportion(map_name: str, data_path: str, type_order: list, configs: dict):
     df_proportion = pd.DataFrame(columns=type_order, index=configs[map_name]["trajectory_files"])
 
     for file_id in configs[map_name]["trajectory_files"]:
@@ -143,7 +149,7 @@ def plot_class_proportion(map_name, data_path, type_order, configs):
     plt.legend(bbox_to_anchor=(1.0, 1.0), loc="upper left")
 
 
-def plot_mean_speed_distribution(dataset, data_path, type_order, configs):
+def plot_mean_speed_distribution(dataset: str, data_path: str, type_order: list, configs: dict):
     speeds = list()
     for key, value in configs.items():
         if not dataset in key:
@@ -193,7 +199,7 @@ def plot_mean_speed_distribution(dataset, data_path, type_order, configs):
     plt.show()
 
 
-def plot_speed_distribution(map_name, map_range, data_path, type: str, configs: dict):
+def plot_speed_distribution(map_name: str, map_range: list, data_path, type: str, configs: dict):
     dataset = configs[map_name]["dataset"]
     x_min, x_max, y_min, y_max = map_range
     matrix_x = int((x_max - x_min) * 10)
@@ -238,32 +244,30 @@ def plot_speed_distribution(map_name, map_range, data_path, type: str, configs: 
     plt.show()
 
 
-def plot_log_angle_distribution(map_name, data_path, type, configs):
+def plot_log_angle_distribution(map_name: str, data_path: str, type: str, configs: dict):
     dataset = configs[map_name]["dataset"]
     bin_num = 72
     theta = np.linspace(0.0, 2 * np.pi, bin_num, endpoint=False)
     radii = np.zeros(bin_num)
 
-    for key, value in configs.items():
-        if not dataset in key:
-            continue
+    for file_id in configs[map_name]["trajectory_files"]:
+        trajectory_path = os.path.join(data_path, "%02d_tracks.csv" % file_id)
+        df_trajectory = pd.read_csv(trajectory_path, chunksize=100000)
+        trajectory_metadata_path = os.path.join(data_path, "%02d_tracksMeta.csv" % file_id)
+        df_meta = pd.read_csv(trajectory_metadata_path)
 
-        for file_id in value["trajectory_files"]:
-            trajectory_path = os.path.join(data_path, "%02d_tracks.csv" % file_id)
-            df_trajectory = pd.read_csv(trajectory_path, chunksize=100000)
-            trajectory_metadata_path = os.path.join(data_path, "%02d_tracksMeta.csv" % file_id)
-            df_meta = pd.read_csv(trajectory_metadata_path)
+        type_dict = dict()
+        for _, line in df_meta.iterrows():
+            type_dict[int(line[column_name[dataset]["id"]])] = line["class"]
 
-            type_dict = dict()
-            for _, line in df_meta.iterrows():
-                type_dict[int(line[column_name[dataset]["id"]])] = line["class"]
+        for chunk in df_trajectory:
+            for _, line in chunk.iterrows():
+                if type_dict[int(line[column_name[dataset]["id"]])] != type:
+                    continue
 
-            for chunk in df_trajectory:
-                for _, line in chunk.iterrows():
-                    if type_dict[int(line[column_name[dataset]["id"]])] != type:
-                        continue
+                radii[int(np.floor(line["heading"] / (360 / bin_num)) % bin_num)] += 1
 
-                    radii[int(np.floor(line["heading"] / (360 / bin_num)) % bin_num)] += 1
+    radii = [max(i, 1) for i in radii]
 
     ax = plt.subplot(111, polar=True)
     bars = ax.bar(theta, np.log10(radii), width=2 * np.pi / bin_num, bottom=4)
@@ -275,7 +279,7 @@ def plot_log_angle_distribution(map_name, data_path, type, configs):
     plt.show()
 
 
-def plot_delta_angle_distribution(dataset, data_path, type, configs):
+def plot_delta_angle_distribution(dataset: str, data_path: str, type: str, configs: dict):
     delta_angles = list()
     last_angle = None
     last_id = None
@@ -325,7 +329,7 @@ def plot_delta_angle_distribution(dataset, data_path, type, configs):
     plt.show()
 
 
-def _count_lane_change(trajectory_file_path):
+def _count_lane_change(trajectory_file_path: str):
     df = pd.read_csv(trajectory_file_path)
     count = dict()
     for _, line in df.iterrows():
@@ -340,7 +344,7 @@ def _count_lane_change(trajectory_file_path):
     return count
 
 
-def plot_lane_change_distribution(dataset, data_path, type_order, configs):
+def plot_lane_change_distribution(dataset: str, data_path: str, type_order: list, configs: dict):
     maps = dict()
     files = dict()
     for key, value in configs.items():
@@ -384,9 +388,4 @@ def plot_lane_change_distribution(dataset, data_path, type_order, configs):
 
 
 if __name__ == "__main__":
-    data_path = "../../trajectory/inD/data"
-    with open("../../map/map.config", "r") as f:
-        configs = json.load(f)
-
-    plot_angle_distribution("inD", data_path, "car", configs)
-    # check_file_ids("../../trajectory/uniD/data", (0, 13))
+    check_file_ids("../../trajectory/uniD/data", (0, 13))
