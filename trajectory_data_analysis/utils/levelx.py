@@ -240,7 +240,14 @@ def plot_speed_distribution(map_name: str, map_range: list, data_path, type: str
     im = plt.imshow(speed_map[:, :, 0], cmap="cool", vmin=0)
     plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
     plt.gcf().set_figwidth(8)
-    cax = plt.gcf().add_axes([plt.gca().get_position().x1+0.01, plt.gca().get_position().y0,0.02,plt.gca().get_position().height])
+    cax = plt.gcf().add_axes(
+        [
+            plt.gca().get_position().x1 + 0.01,
+            plt.gca().get_position().y0,
+            0.02,
+            plt.gca().get_position().height,
+        ]
+    )
     plt.colorbar(im, cax=cax)
     plt.show()
 
