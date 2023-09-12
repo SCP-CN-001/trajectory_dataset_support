@@ -202,8 +202,8 @@ def plot_mean_speed_distribution(dataset: str, data_path: str, type_order: list,
 def plot_speed_distribution(map_name: str, map_range: list, data_path, type: str, configs: dict):
     dataset = configs[map_name]["dataset"]
     x_min, x_max, y_min, y_max = map_range
-    matrix_x = int((x_max - x_min) * 10)
-    matrix_y = int((y_max - y_min) * 10)
+    matrix_x = int((x_max - x_min) * 5)
+    matrix_y = int((y_max - y_min) * 5)
     speed_map = np.zeros([matrix_y, matrix_x, 2])
 
     for file_id in configs[map_name]["trajectory_files"]:
@@ -221,8 +221,8 @@ def plot_speed_distribution(map_name: str, map_range: list, data_path, type: str
                 if type_dict[int(line[column_name[dataset]["id"]])] != type:
                     continue
 
-                x = int((line[column_name[dataset]["x"]] - x_min) * 10)
-                y = int((line[column_name[dataset]["y"]] - y_min) * 10)
+                x = int((line[column_name[dataset]["x"]] - x_min) * 5)
+                y = int((line[column_name[dataset]["y"]] - y_min) * 5)
                 if x < 0 or x >= matrix_x or y < 0 or y >= matrix_y:
                     continue
                 speed_map[y, x, 0] += np.sqrt(
@@ -237,10 +237,11 @@ def plot_speed_distribution(map_name: str, map_range: list, data_path, type: str
     if y_max < 0:
         speed_map = np.flip(speed_map, axis=0)
 
-    plt.imshow(speed_map[:, :, 0], cmap="cool", vmin=0)
+    im = plt.imshow(speed_map[:, :, 0], cmap="cool", vmin=0)
     plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
     plt.gcf().set_figwidth(8)
-    plt.colorbar()
+    cax = plt.gcf().add_axes([plt.gca().get_position().x1+0.01, plt.gca().get_position().y0,0.02,plt.gca().get_position().height])
+    plt.colorbar(im, cax=cax)
     plt.show()
 
 
