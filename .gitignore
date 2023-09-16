@@ -1,5 +1,6 @@
 # custom
 .DS_Store
+trajectory_data_analysis/cache/
 trajectory/*
 
 # Gitignore Template for Python
