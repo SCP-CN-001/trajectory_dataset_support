@@ -46,7 +46,13 @@ def _get_plot_range(df: pd.DataFrame):
     return x_min, x_max, y_min, y_max
 
 
-def plot_map_and_trajectories(data_path: str, img_path: str, transform: mpl.transforms.Affine2D, type_order: list, configs: dict):
+def plot_map_and_trajectories(
+    data_path: str,
+    img_path: str,
+    transform: mpl.transforms.Affine2D,
+    type_order: list,
+    configs: dict,
+):
     map_img = mpimg.imread(img_path)
     map_img = np.flipud(map_img)
 
@@ -60,7 +66,7 @@ def plot_map_and_trajectories(data_path: str, img_path: str, transform: mpl.tran
         with open(instance_path, "r") as f_instance:
             instance_data = json.load(f_instance)
 
-        for  value in instance_data.values():
+        for value in instance_data.values():
             type_ = agent_data[value["agent_token"]]["type"]
             location_list.append([value["coords"][0], value["coords"][1], type_])
 
@@ -157,7 +163,7 @@ def plot_speed_distribution(map_range: list, data_path: str, type: str, configs:
             if x < 0 or x >= matrix_x or y < 0 or y >= matrix_y:
                 continue
             speed_map[y, x, 1] += time_steps
-    
+
     speed_map[:, :, 0] /= speed_map[:, :, 1]
     speed_map = np.flip(speed_map, axis=0)
 
@@ -230,7 +236,7 @@ def plot_log_angle_distribution(data_path: str, type: str, configs: dict):
         for value in instance_data.values():
             if agent_data[value["agent_token"]]["type"] != type:
                 continue
-            
+
             angle = value["heading"] * 180 / np.pi
             radii[int(np.floor(angle / 5))] += 1
 

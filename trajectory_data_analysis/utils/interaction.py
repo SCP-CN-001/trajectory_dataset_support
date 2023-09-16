@@ -133,7 +133,7 @@ def plot_log_angle_distribution(map_name, data_path, configs):
                 angle = line["psi_rad"]
                 if angle < 0:
                     angle += 2 * np.pi
-                
+
                 angle = angle * 180 / np.pi
                 radii[int(np.floor(angle / 5))] += 1
 
@@ -146,6 +146,7 @@ def plot_log_angle_distribution(map_name, data_path, configs):
         bar.set_alpha(0.5)
     plt.gcf().set_size_inches(6, 6)
     plt.show()
+
 
 if __name__ == "__main__":
     with open("../../map/map.config", "r") as f:

@@ -20,16 +20,10 @@ mpl.rcParams.update(
 
 column_name = {
     "highD": {"x": "x", "y": "y", "id": "id"},
-    "inD": {"x": "xCenter", "y": "yCenter", "vx": "xVelocity", "vy": "yVelocity", "id": "trackId"},
-    "rounD": {
-        "x": "xCenter",
-        "y": "yCenter",
-        "vx": "xVelocity",
-        "vy": "yVelocity",
-        "id": "trackId",
-    },
-    "exiD": {"x": "xCenter", "y": "yCenter", "vx": "xVelocity", "vy": "yVelocity", "id": "trackId"},
-    "uniD": {"x": "xCenter", "y": "yCenter", "vx": "xVelocity", "vy": "yVelocity", "id": "trackId"},
+    "inD": {"x": "xCenter", "y": "yCenter", "id": "trackId"},
+    "rounD": {"x": "xCenter", "y": "yCenter", "id": "trackId"},
+    "exiD": {"x": "xCenter", "y": "yCenter", "id": "trackId"},
+    "uniD": {"x": "xCenter", "y": "yCenter", "id": "trackId"},
 }
 
 
@@ -169,8 +163,8 @@ def plot_mean_speed_distribution(dataset: str, data_path: str, type_order: list,
                 id_list = list()
 
                 for chunk in df_trajectory:
-                    vx = chunk[column_name[dataset]["vx"]]
-                    vy = chunk[column_name[dataset]["vy"]]
+                    vx = chunk[column_name[dataset]["xVelocity"]]
+                    vy = chunk[column_name[dataset]["yVelocity"]]
                     speed_list += list(np.sqrt(vx**2 + vy**2))
                     id_list += list(chunk[column_name[dataset]["id"]])
 
@@ -226,7 +220,8 @@ def plot_speed_distribution(map_name: str, map_range: list, data_path, type: str
                 if x < 0 or x >= matrix_x or y < 0 or y >= matrix_y:
                     continue
                 speed_map[y, x, 0] += np.sqrt(
-                    line[column_name[dataset]["vx"]] ** 2 + line[column_name[dataset]["vy"]] ** 2
+                    line[column_name[dataset]["xVelocity"]] ** 2
+                    + line[column_name[dataset]["yVelocity"]] ** 2
                 )
                 speed_map[y, x, 1] += 1
 
