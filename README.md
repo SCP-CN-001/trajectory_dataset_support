@@ -51,8 +51,8 @@ This repository provides SUMO-style road network, lanelet2 style maps, trajector
 | [rounD](https://www.round-dataset.com/) | $\surd$ | $\surd$ | $\surd$ | $\surd$ | $\surd$ |
 | [exiD](https://www.exid-dataset.com/) | $\surd$ |  | $\surd$ | $\surd$ | $\surd$ |
 | [uniD](https://www.unid-dataset.com/) | $\surd$ |  || $\surd$ | $\surd$ |
-| [INTERACTION](http://interaction-dataset.com/) | $\surd$ | || $\surd$ | |
-| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | $\surd$ | | $\surd$ | $\surd$ | |
+| [INTERACTION](http://interaction-dataset.com/) | $\surd$ | || $\surd$ | $\surd$ |
+| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | $\surd$ | | $\surd$ | $\surd$ | $\surd$ |
 
 ## Citation
 

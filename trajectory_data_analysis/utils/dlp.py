@@ -19,17 +19,17 @@ mpl.rcParams.update(
 )
 
 
-def _check_trajectory_types(data_path: str, configs: dict):
-    type_set = set()
+def _check_trajectory_class(data_path: str, configs: dict):
+    class_set = set()
     for file_id in configs["DLP"]["trajectory_files"]:
         file_path = os.path.join(data_path, "DJI_%04d_agents.json" % file_id)
         with open(file_path, "r") as f:
             agent_data = json.load(f)
 
         for _, value in agent_data.items():
-            type_set.add(value["type"])
+            class_set.add(value["type"])
 
-    print(type_set)
+    print(class_set)
 
 
 def _get_plot_range(df: pd.DataFrame):
@@ -50,7 +50,7 @@ def plot_map_and_trajectories(
     data_path: str,
     img_path: str,
     transform: mpl.transforms.Affine2D,
-    type_order: list,
+    class_order: list,
     configs: dict,
 ):
     map_img = mpimg.imread(img_path)
@@ -67,14 +67,14 @@ def plot_map_and_trajectories(
             instance_data = json.load(f_instance)
 
         for value in instance_data.values():
-            type_ = agent_data[value["agent_token"]]["type"]
-            location_list.append([value["coords"][0], value["coords"][1], type_])
+            class_ = agent_data[value["agent_token"]]["type"]
+            location_list.append([value["coords"][0], value["coords"][1], class_])
 
     df = pd.DataFrame(location_list, columns=["x", "y", "class"])
     x_min, x_max, y_min, y_max = _get_plot_range(df)
 
     fig, ax = plt.subplots()
-    fig.set_figwidth(9)
+    fig.set_figwidth(6)
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)
     im = ax.imshow(map_img, aspect="equal")
@@ -87,7 +87,7 @@ def plot_map_and_trajectories(
         hue="class",
         s=0.01,
         palette="husl",
-        hue_order=type_order,
+        hue_order=class_order,
         legend=True,
         ax=ax,
     )
@@ -98,8 +98,8 @@ def plot_map_and_trajectories(
     plt.show()
 
 
-def plot_class_proportion(data_path: str, type_order: list, configs: dict):
-    df_proportion = pd.DataFrame(0, columns=type_order, index=configs["DLP"]["trajectory_files"])
+def plot_class_proportion(data_path: str, class_order: list, configs: dict):
+    df_proportion = pd.DataFrame(0, columns=class_order, index=configs["DLP"]["trajectory_files"])
     for file_id in configs["DLP"]["trajectory_files"]:
         agent_path = os.path.join(data_path, "DJI_%04d_agents.json" % file_id)
         with open(agent_path, "r") as f_agent:
@@ -116,11 +116,11 @@ def plot_class_proportion(data_path: str, type_order: list, configs: dict):
     df_proportion = df_proportion.div(df_proportion.sum(axis=1), axis=0)
 
     df_proportion.plot.barh(stacked=True, title="DLP", colormap="Set2", rot=1)
-    plt.gcf().set_size_inches(8, 0.35 * len(df_proportion))
+    plt.gcf().set_size_inches(6, 0.3 * len(df_proportion))
     plt.legend(bbox_to_anchor=(1.0, 1.0), loc="upper left")
 
 
-def plot_speed_distribution(map_range: list, data_path: str, type: str, configs: dict):
+def plot_speed_distribution(map_range: list, data_path: str, class_: str, configs: dict):
     x_min, x_max, y_min, y_max = map_range
     matrix_x = int((x_max - x_min) * 5)
     matrix_y = int((y_max - y_min) * 5)
@@ -145,7 +145,7 @@ def plot_speed_distribution(map_range: list, data_path: str, type: str, configs:
         time_steps = len(frame_data)
 
         for value in instance_data.values():
-            if agent_data[value["agent_token"]]["type"] != type:
+            if agent_data[value["agent_token"]]["type"] != class_:
                 continue
 
             x = int((value["coords"][0] - x_min) * 5)
@@ -156,7 +156,7 @@ def plot_speed_distribution(map_range: list, data_path: str, type: str, configs:
             speed_map[y, x, 1] += 1
 
         for value in obstacle_data.values():
-            if value["type"] != type:
+            if value["type"] != class_:
                 continue
             x = int((value["coords"][0] - x_min) * 5)
             y = int((value["coords"][1] - y_min) * 5)
@@ -169,7 +169,7 @@ def plot_speed_distribution(map_range: list, data_path: str, type: str, configs:
 
     im = plt.imshow(speed_map[:, :, 0], cmap="cool", vmin=0, vmax=11)
     plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
-    plt.gcf().set_figwidth(8)
+    plt.gcf().set_figwidth(6)
     cax = plt.gcf().add_axes(
         [
             plt.gca().get_position().x1 + 0.01,
@@ -206,7 +206,7 @@ def plot_parking_density(map_range: list, data_path: str, configs: dict):
 
     im = plt.imshow(density_map[:, :, 0], cmap="cool", vmin=0)
     plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
-    plt.gcf().set_figwidth(8)
+    plt.gcf().set_figwidth(6)
     cax = plt.gcf().add_axes(
         [
             plt.gca().get_position().x1 + 0.01,
@@ -219,7 +219,7 @@ def plot_parking_density(map_range: list, data_path: str, configs: dict):
     plt.show()
 
 
-def plot_log_angle_distribution(data_path: str, type: str, configs: dict):
+def plot_log_angle_distribution(data_path: str, class_: str, configs: dict):
     bin_num = 72
     theta = np.linspace(0.0, 2 * np.pi, bin_num, endpoint=False)
     radii = np.zeros(bin_num)
@@ -234,7 +234,7 @@ def plot_log_angle_distribution(data_path: str, type: str, configs: dict):
             instance_data = json.load(f_instance)
 
         for value in instance_data.values():
-            if agent_data[value["agent_token"]]["type"] != type:
+            if agent_data[value["agent_token"]]["type"] != class_:
                 continue
 
             angle = value["heading"] * 180 / np.pi
@@ -247,7 +247,7 @@ def plot_log_angle_distribution(data_path: str, type: str, configs: dict):
     for r, bar in zip(radii, bars):
         bar.set_facecolor("turquoise")
         bar.set_alpha(0.5)
-    plt.gcf().set_size_inches(6, 6)
+    plt.gcf().set_size_inches(4, 4)
     plt.show()
 
 
@@ -256,4 +256,4 @@ if __name__ == "__main__":
         configs = json.load(f)
 
     data_path = "../../trajectory/DLP"
-    _check_trajectory_types("DLP", data_path, configs)
+    _check_trajectory_class("DLP", data_path, configs)

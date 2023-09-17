@@ -1,7 +1,8 @@
 # custom
 .DS_Store
+.VSCodeCounter/
 trajectory_data_analysis/cache/
-trajectory/*
+trajectory/
 
 # Gitignore Template for Python
 # Byte-compiled / optimized / DLL files

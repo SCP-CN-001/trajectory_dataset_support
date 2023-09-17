@@ -1,6 +1,7 @@
 import os
 import json
 
+import joblib
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -8,6 +9,7 @@ import matplotlib.transforms as mtransforms
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from sklearn import svm
 
 
 mpl.rcParams.update(
@@ -34,7 +36,7 @@ def _get_plot_range(df: pd.DataFrame):
     return x_min, x_max, y_min, y_max
 
 
-def plot_map_and_trajectories(map_name, data_path, img_path, transform, type_order, configs):
+def plot_map_and_trajectories(map_name, data_path, img_path, transform, class_order, configs):
     map_img = mpimg.imread(os.path.join(img_path, configs[map_name]["name"] + ".png"))
     map_img = np.flipud(map_img)
 
@@ -54,7 +56,7 @@ def plot_map_and_trajectories(map_name, data_path, img_path, transform, type_ord
     x_min, x_max, y_min, y_max = _get_plot_range(df)
 
     fig, ax = plt.subplots()
-    fig.set_figwidth(9)
+    fig.set_figwidth(6)
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)
     im = ax.imshow(map_img, aspect="equal")
@@ -67,7 +69,7 @@ def plot_map_and_trajectories(map_name, data_path, img_path, transform, type_ord
         hue="class",
         s=0.05,
         palette="husl",
-        hue_order=type_order,
+        hue_order=class_order,
         legend=True,
         ax=ax,
     )
@@ -76,6 +78,57 @@ def plot_map_and_trajectories(map_name, data_path, img_path, transform, type_ord
     ax.set_ylabel(None)
     plt.legend(bbox_to_anchor=(1.0, 1.0), loc="upper left")
     plt.show()
+
+
+def plot_class_proportion(map_name: str, data_path: str, class_order: list, configs: dict):
+    clf = joblib.load("./trajectory_classifier.m")
+    df_proportion = pd.DataFrame(columns=class_order, index=configs[map_name]["trajectory_files"])
+    cnt_no_pedestrian = 0
+
+    for file_id in configs[map_name]["trajectory_files"]:
+        vehicle_trajectory_path = os.path.join(
+            data_path, map_name, "vehicle_tracks_%03d.csv" % file_id
+        )
+        df_trajectory = pd.read_csv(vehicle_trajectory_path, chunksize=100000)
+        id_set = set()
+        for chunk in df_trajectory:
+            ids = chunk["track_id"].unique()
+            id_set.update(ids)
+        df_proportion.loc[file_id, "car"] = len(id_set)
+
+        pedestrian_trajectory_path = os.path.join(
+            data_path, map_name, "pedestrian_tracks_%03d.csv" % file_id
+        )
+
+        if not os.path.exists(pedestrian_trajectory_path):
+            cnt_no_pedestrian += 1
+            continue
+
+        df_pedestrian = pd.read_csv(pedestrian_trajectory_path)
+        trajectory_cnt = dict({"pedestrian": 0, "bicycle": 0})
+        for trajectory_id in df_pedestrian["track_id"].unique():
+            trajectory = df_pedestrian[df_pedestrian["track_id"] == trajectory_id]
+            vx = trajectory["vx"]
+            vy = trajectory["vy"]
+            v = np.sqrt(vx**2 + vy**2)
+            angle = np.arctan2(vy, vx)
+            v_min = v.min()
+            v_max = v.max()
+            v_mean = v.mean()
+            v_std = v.std()
+            angle_std = np.std(angle[1:] - angle[:-1])
+            class_ = clf.predict([[v_min, v_max, v_mean, v_std, angle_std]])[0]
+            trajectory_cnt[class_] += 1
+        df_proportion.loc[file_id, "pedestrian"] = trajectory_cnt["pedestrian"]
+        df_proportion.loc[file_id, "bicycle"] = trajectory_cnt["bicycle"]
+
+    if cnt_no_pedestrian == len(configs[map_name]["trajectory_files"]):
+        print("There is no pedestrian trajectories in %s" % map_name)
+    else:
+        df_proportion = df_proportion.div(df_proportion.sum(axis=1), axis=0)
+        df_proportion.plot.barh(stacked=True, title=map_name, colormap="Set2", rot=1)
+        plt.gcf().set_size_inches(6, 0.3 * len(df_proportion))
+        plt.legend(bbox_to_anchor=(1.0, 1.0), loc="upper left")
 
 
 def plot_car_speed_distribution(map_name, map_range, data_path, configs: dict):
@@ -104,7 +157,7 @@ def plot_car_speed_distribution(map_name, map_range, data_path, configs: dict):
 
     im = plt.imshow(speed_map[:, :, 0], cmap="cool", vmin=0)
     plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
-    plt.gcf().set_figwidth(8)
+    plt.gcf().set_figwidth(6)
     cax = plt.gcf().add_axes(
         [
             plt.gca().get_position().x1 + 0.01,
@@ -144,7 +197,7 @@ def plot_log_angle_distribution(map_name, data_path, configs):
     for r, bar in zip(radii, bars):
         bar.set_facecolor("turquoise")
         bar.set_alpha(0.5)
-    plt.gcf().set_size_inches(6, 6)
+    plt.gcf().set_size_inches(4, 4)
     plt.show()
 
 
@@ -154,8 +207,8 @@ if __name__ == "__main__":
 
     data_path = "../../trajectory/INTERACTION/recorded_trackfiles/"
     img_path = "../../img/INTERACTION/"
-    trajectory_types = ["car", "bicycle", "pedestrian"]
+    trajectory_class = ["car", "bicycle", "pedestrian"]
     transform1 = mtransforms.Affine2D().scale(0.18).translate(1005, 945)
     plot_map_and_trajectories(
-        "DR_CHN_Merging_ZS", data_path, img_path, transform1, trajectory_types, configs
+        "DR_CHN_Merging_ZS", data_path, img_path, transform1, trajectory_class, configs
     )
