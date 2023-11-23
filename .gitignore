@@ -3,6 +3,7 @@
 .VSCodeCounter/
 trajectory_data_analysis/cache/
 trajectory/
+trajectory_sample/DLP
 
 # Gitignore Template for Python
 # Byte-compiled / optimized / DLL files
