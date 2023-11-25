@@ -1,8 +1,13 @@
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import sqlite3
+
+mpl.rcParams.update(
+    {"figure.dpi": 300, "font.family": "serif", "font.size": 10, "font.stretch": "semi-expanded"}
+)
 
 categories = [
     "vehicle",
@@ -41,9 +46,9 @@ def plot_trajectories(data_path, trajectory_folder, trajectory_files):
     fig.set_figwidth(6)
     df = pd.DataFrame({"x": x, "y": y, "category": category_col})
     sns.scatterplot(
+        df,
         x="x",
         y="y",
-        data=df,
         hue="category",
         s=0.05,
         palette="husl",
@@ -90,13 +95,58 @@ def plot_class_proportion(data_path, trajectory_folders, trajectory_files):
 
     df_proportion = df_proportion.div(df_proportion.sum(axis=1), axis=0)
     df_proportion.plot.barh(stacked=True, colormap="Set2", rot=1)
+    plt.gcf().set_figwidth(6)
     plt.legend(bbox_to_anchor=(1.0, 1.0), loc="upper left")
+
+
+def plot_mean_speed_distribution(data_path, trajectory_folders, trajectory_files):
+    speeds = []
+
+    for i, trajectory_folder in enumerate(trajectory_folders):
+        for file_name in trajectory_files[i]:
+            file_path = data_path + trajectory_folder + "/" + file_name
+            with sqlite3.connect(file_path) as motion_db:
+                df_category = pd.read_sql_query(
+                    "SELECT * FROM category;", motion_db, index_col="token"
+                )
+                df_track = pd.read_sql_query("SELECT * FROM track;", motion_db, index_col="token")
+                df_lidar_box = pd.read_sql_query("SELECT * FROM lidar_box;", motion_db)
+
+                dict_category = dict(zip(df_category.index, df_category["name"]))
+                dict_track = dict(zip(df_track.index, df_track["category_token"]))
+
+                df_lidar_box["speed"] = np.sqrt(
+                    df_lidar_box["vx"] ** 2 + df_lidar_box["vy"] ** 2 + df_lidar_box["vz"] ** 2
+                )
+                mean_speed = df_lidar_box.groupby("track_token")["speed"].mean()
+                track_token = mean_speed.index
+                for i, speed in enumerate(mean_speed):
+                    speeds.append(
+                        [trajectory_folder, dict_category[dict_track[track_token[i]]], speed]
+                    )
+
+            motion_db.close()
+
+    df = pd.DataFrame(speeds, columns=["location", "class", "meanSpeed"])
+    plot = sns.FacetGrid(
+        df,
+        col="location",
+        col_wrap=2,
+        sharex=False,
+        sharey=False,
+        hue="class",
+        palette="husl",
+        hue_order=dynamic_category,
+    )
+    plot.map(sns.histplot, "meanSpeed", stat="percent", element="step", kde=True)
+    plot.add_legend()
+    plt.show()
 
 
 def plot_speed_distribution(map_boundary, data_path, trajectory_folder, trajectory_files):
     x_min, x_max, y_min, y_max = map_boundary
-    matrix_x = int((x_max - x_min) * 5)
-    matrix_y = int((y_max - y_min) * 5)
+    matrix_x = int((x_max - x_min))
+    matrix_y = int((y_max - y_min))
     speed_map = np.zeros((matrix_y, matrix_x, 2))
 
     for file_name in trajectory_files:
@@ -112,8 +162,8 @@ def plot_speed_distribution(map_boundary, data_path, trajectory_folder, trajecto
             for row in df_lidar_box.iterrows():
                 category = dict_category[dict_track[row[1]["track_token"]]]
                 if category == "vehicle":
-                    x = int((row[1]["x"] - x_min) * 5)
-                    y = int((row[1]["y"] - y_min) * 5)
+                    x = int((row[1]["x"] - x_min))
+                    y = int((row[1]["y"] - y_min))
                     if x < 0 and x >= matrix_x and y < 0 and y >= matrix_y:
                         continue
 
@@ -124,7 +174,7 @@ def plot_speed_distribution(map_boundary, data_path, trajectory_folder, trajecto
         motion_db.close()
 
     speed_map[:, :, 0] /= speed_map[:, :, 1]
-    print(np.where(speed_map[:, :, 0] > 0))
+    speed_map = np.flip(speed_map, axis=0)
 
     im = plt.imshow(speed_map[:, :, 0], cmap="cool", vmin=0)
     plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)

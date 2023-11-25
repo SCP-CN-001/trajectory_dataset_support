@@ -315,14 +315,7 @@ def plot_delta_angle_distribution(dataset: str, data_path: str, class_: str, con
 
     df = pd.DataFrame(delta_angles, columns=["map", "deltaAngle", "current", "last"])
     plot = sns.FacetGrid(
-        df,
-        col="map",
-        col_wrap=2,
-        sharex=True,
-        sharey=False,
-        height=2,
-        aspect=1.5,
-        palette="husl",
+        df, col="map", col_wrap=2, sharex=True, sharey=False, height=2, aspect=1.5, palette="husl"
     )
     plot.map(sns.kdeplot, "deltaAngle", fill=True, alpha=0.5)
     plot.set(xlim=(-np.pi / 2, np.pi / 2))
@@ -365,12 +358,7 @@ def plot_lane_change_distribution(dataset: str, data_path: str, class_order: lis
     for map_key, lane_change_dist in maps.items():
         for class_, lane_change_count in lane_change_dist.items():
             for num_lane_changes, count in lane_change_count.items():
-                df.loc[len(df.index)] = [
-                    map_key,
-                    class_,
-                    int(num_lane_changes),
-                    int(count),
-                ]
+                df.loc[len(df.index)] = [map_key, class_, int(num_lane_changes), int(count)]
 
     plot = sns.FacetGrid(
         df,
