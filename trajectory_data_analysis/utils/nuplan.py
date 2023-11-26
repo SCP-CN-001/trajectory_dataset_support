@@ -6,7 +6,7 @@ import seaborn as sns
 import sqlite3
 
 mpl.rcParams.update(
-    {"figure.dpi": 300, "font.family": "serif", "font.size": 10, "font.stretch": "semi-expanded"}
+    {"figure.dpi": 300, "font.family": "Dejavu Serif", "font.size": 10, "font.stretch": "semi-expanded"}
 )
 
 categories = [
@@ -26,8 +26,10 @@ def plot_trajectories(data_path, trajectory_folder, trajectory_files):
     y = []
     category_col = []
 
-    for file_name in trajectory_files:
-        file_path = data_path + trajectory_folder + "/" + file_name
+    for trajectory_file in trajectory_files:
+        if trajectory_file[-3:] != ".db":
+            continue
+        file_path = data_path + trajectory_folder + "/" + trajectory_file
         with sqlite3.connect(file_path) as motion_db:
             df_category = pd.read_sql_query("SELECT * FROM category;", motion_db, index_col="token")
             df_track = pd.read_sql_query("SELECT * FROM track;", motion_db, index_col="token")
@@ -65,12 +67,12 @@ def plot_class_proportion(data_path, trajectory_folders, trajectory_files):
     df_proportion = pd.DataFrame(columns=dynamic_category, index=trajectory_folders)
 
     for i, trajectory_folder in enumerate(trajectory_folders):
-        for file_name in trajectory_files[i]:
-            file_path = data_path + trajectory_folder + "/" + file_name
+        for trajectory_file in trajectory_files[i]:
+            if trajectory_file[-3:] != ".db":
+                continue
+            file_path = data_path + trajectory_folder + "/" + trajectory_file
             with sqlite3.connect(file_path) as motion_db:
-                df_category = pd.read_sql_query(
-                    "SELECT * FROM category;", motion_db, index_col="token"
-                )
+                df_category = pd.read_sql_query("SELECT * FROM category;", motion_db, index_col="token")
                 df_track = pd.read_sql_query("SELECT * FROM track;", motion_db, index_col="token")
 
                 dict_category = dict(zip(df_category["name"], df_category.index))
@@ -103,12 +105,12 @@ def plot_mean_speed_distribution(data_path, trajectory_folders, trajectory_files
     speeds = []
 
     for i, trajectory_folder in enumerate(trajectory_folders):
-        for file_name in trajectory_files[i]:
-            file_path = data_path + trajectory_folder + "/" + file_name
+        for trajectory_file in trajectory_files[i]:
+            if trajectory_file[-3:] != ".db":
+                continue
+            file_path = data_path + trajectory_folder + "/" + trajectory_file
             with sqlite3.connect(file_path) as motion_db:
-                df_category = pd.read_sql_query(
-                    "SELECT * FROM category;", motion_db, index_col="token"
-                )
+                df_category = pd.read_sql_query("SELECT * FROM category;", motion_db, index_col="token")
                 df_track = pd.read_sql_query("SELECT * FROM track;", motion_db, index_col="token")
                 df_lidar_box = pd.read_sql_query("SELECT * FROM lidar_box;", motion_db)
 
@@ -149,8 +151,10 @@ def plot_speed_distribution(map_boundary, data_path, trajectory_folder, trajecto
     matrix_y = int((y_max - y_min))
     speed_map = np.zeros((matrix_y, matrix_x, 2))
 
-    for file_name in trajectory_files:
-        file_path = data_path + trajectory_folder + "/" + file_name
+    for trajectory_file in trajectory_files:
+        if trajectory_file[-3:] != ".db":
+            continue
+        file_path = data_path + trajectory_folder + "/" + trajectory_file
         with sqlite3.connect(file_path) as motion_db:
             df_category = pd.read_sql_query("SELECT * FROM category;", motion_db, index_col="token")
             df_track = pd.read_sql_query("SELECT * FROM track;", motion_db, index_col="token")
