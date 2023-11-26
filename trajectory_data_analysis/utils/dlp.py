@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# @File: dlp.py
+# @Description: Some visualization functions for Dragon Lake Park Dataset.
+# @Time: 2023/11/26
+# @Author: Yueyuan Li
+
 import os
 import json
 

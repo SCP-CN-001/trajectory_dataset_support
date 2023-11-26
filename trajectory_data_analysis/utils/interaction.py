@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# @File: interaction.py
+# @Description: Some visualization functions for INTERACTION dataset.
+# @Time: 2023/11/26
+# @Author: Yueyuan Li
+
 import os
 import json
 
@@ -9,7 +16,6 @@ import matplotlib.transforms as mtransforms
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from sklearn import svm
 
 
 mpl.rcParams.update(

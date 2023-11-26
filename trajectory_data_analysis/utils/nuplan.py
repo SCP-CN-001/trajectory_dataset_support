@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# @File: nuplan.py
+# @Description: Some visualization functions for NuPlan Motion dataset.
+# @Time: 2023/11/26
+# @Author: Yueyuan Li
+
+import geopandas as gpd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -6,7 +14,12 @@ import seaborn as sns
 import sqlite3
 
 mpl.rcParams.update(
-    {"figure.dpi": 300, "font.family": "Dejavu Serif", "font.size": 10, "font.stretch": "semi-expanded"}
+    {
+        "figure.dpi": 300,
+        "font.family": "Dejavu Serif",
+        "font.size": 10,
+        "font.stretch": "semi-expanded",
+    }
 )
 
 categories = [
@@ -19,6 +32,33 @@ categories = [
     "generic_object",
 ]
 dynamic_category = ["vehicle", "bicycle", "pedestrian", "generic_object"]
+
+
+def plot_map(data_path, map_file):
+    map_path = data_path + "/" + map_file
+
+    fig, ax = plt.subplots()
+    fig.set_figwidth(6)
+    generic_drivable_areas = gpd.read_file(map_path, layer="generic_drivable_areas")
+    generic_drivable_areas.plot(ax=ax, color="lightgreen")
+    lanes_polygons = gpd.read_file(map_path, layer="lanes_polygons")
+    lanes_polygons.plot(ax=ax, color="gray")
+    intersections = gpd.read_file(map_path, layer="intersections")
+    intersections.plot(ax=ax, color="gray")
+    walkways = gpd.read_file(map_path, layer="walkways")
+    walkways.plot(ax=ax, color="lightgray")
+    carpark_areas = gpd.read_file(map_path, layer="carpark_areas")
+    carpark_areas.plot(ax=ax, color="lightgray")
+    stop_polygons = gpd.read_file(map_path, layer="stop_polygons")
+    stop_polygons.plot(ax=ax, color="white")
+    crosswalks = gpd.read_file(map_path, layer="crosswalks")
+    crosswalks.plot(ax=ax, color="white")
+    traffic_lights = gpd.read_file(map_path, layer="traffic_lights")
+    traffic_lights.plot(ax=ax, marker="*", color="red", markersize=0.01)
+
+    ax.set_aspect("equal")
+    ax.set_title(map_file.split("/")[0])
+    plt.show()
 
 
 def plot_trajectories(data_path, trajectory_folder, trajectory_files):
@@ -72,7 +112,9 @@ def plot_class_proportion(data_path, trajectory_folders, trajectory_files):
                 continue
             file_path = data_path + trajectory_folder + "/" + trajectory_file
             with sqlite3.connect(file_path) as motion_db:
-                df_category = pd.read_sql_query("SELECT * FROM category;", motion_db, index_col="token")
+                df_category = pd.read_sql_query(
+                    "SELECT * FROM category;", motion_db, index_col="token"
+                )
                 df_track = pd.read_sql_query("SELECT * FROM track;", motion_db, index_col="token")
 
                 dict_category = dict(zip(df_category["name"], df_category.index))
@@ -110,7 +152,9 @@ def plot_mean_speed_distribution(data_path, trajectory_folders, trajectory_files
                 continue
             file_path = data_path + trajectory_folder + "/" + trajectory_file
             with sqlite3.connect(file_path) as motion_db:
-                df_category = pd.read_sql_query("SELECT * FROM category;", motion_db, index_col="token")
+                df_category = pd.read_sql_query(
+                    "SELECT * FROM category;", motion_db, index_col="token"
+                )
                 df_track = pd.read_sql_query("SELECT * FROM track;", motion_db, index_col="token")
                 df_lidar_box = pd.read_sql_query("SELECT * FROM lidar_box;", motion_db)
 

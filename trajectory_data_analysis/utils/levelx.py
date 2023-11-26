@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# @File: levelx.py
+# @Description: Some visualization functions for LevelX series datasets (highD, rounD,
+# inD, uniD, exiD).
+# @Time: 2023/11/26
+# @Author: Yueyuan Li
+
 import os
 
 import matplotlib as mpl
