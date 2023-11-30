@@ -55,18 +55,24 @@ def plot_map(data_path, map_file):
     crosswalks.plot(ax=ax, color="white")
     traffic_lights = gpd.read_file(map_path, layer="traffic_lights")
     traffic_lights.plot(ax=ax, marker="*", color="red", markersize=0.01)
-
-    ax.set_aspect("equal")
+    
+    plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
     ax.set_title(map_file.split("/")[0])
     plt.show()
 
 
-def plot_trajectories(data_path, trajectory_folder, trajectory_files):
+def plot_trajectories(data_path, trajectory_folder, trajectory_files, proportion=None):
     x = []
     y = []
     category_col = []
 
-    for trajectory_file in trajectory_files:
+    if proportion is not None:
+        np.random.shuffle(trajectory_files)
+        trajectory_files_subset = trajectory_files[: int(len(trajectory_files) * proportion)]
+    else:
+        trajectory_files_subset = trajectory_files
+
+    for trajectory_file in trajectory_files_subset:
         if trajectory_file[-3:] != ".db":
             continue
         file_path = data_path + trajectory_folder + "/" + trajectory_file
@@ -98,16 +104,22 @@ def plot_trajectories(data_path, trajectory_folder, trajectory_files):
         legend=False,
         ax=ax,
     )
+    plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
     ax.set_aspect("equal")
     ax.set_title(trajectory_folder)
     plt.show()
 
 
-def plot_class_proportion(data_path, trajectory_folders, trajectory_files):
+def plot_class_proportion(data_path, trajectory_folders, trajectory_files, proportion = None):
     df_proportion = pd.DataFrame(columns=dynamic_category, index=trajectory_folders)
 
     for i, trajectory_folder in enumerate(trajectory_folders):
-        for trajectory_file in trajectory_files[i]:
+        if proportion is not None:
+            np.random.shuffle(trajectory_files[i])
+            trajectory_files_subset = trajectory_files[i][: int(len(trajectory_files[i]) * proportion)]
+        else:
+            trajectory_files_subset = trajectory_files[i]
+        for trajectory_file in trajectory_files_subset:
             if trajectory_file[-3:] != ".db":
                 continue
             file_path = data_path + trajectory_folder + "/" + trajectory_file
@@ -125,16 +137,17 @@ def plot_class_proportion(data_path, trajectory_folders, trajectory_files):
 
             motion_db.close()
 
-    for row in df_proportion.iterrows():
-        print(
-            "In %s, there are %d vehicles, %d bicycles, %d pedestrians, %d generic objects."
-            % (
-                row[0],
-                row[1]["vehicle"],
-                row[1]["bicycle"],
-                row[1]["pedestrian"],
-                row[1]["generic_object"],
-            )
+    if proportion is None:
+        for row in df_proportion.iterrows():
+            print(
+                "In %s, there are in total %d vehicles, %d bicycles, %d pedestrians, %d generic objects."
+                % (
+                    row[0],
+                    row[1]["vehicle"],
+                    row[1]["bicycle"],
+                    row[1]["pedestrian"],
+                    row[1]["generic_object"],
+                )
         )
 
     df_proportion = df_proportion.div(df_proportion.sum(axis=1), axis=0)
@@ -235,5 +248,6 @@ def plot_speed_distribution(map_boundary, data_path, trajectory_folder, trajecto
             plt.gca().get_position().height,
         ]
     )
+    plt.gca().set_title(trajectory_folder)
     plt.colorbar(im, cax=cax)
     plt.show()
