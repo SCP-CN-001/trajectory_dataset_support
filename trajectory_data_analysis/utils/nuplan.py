@@ -55,7 +55,7 @@ def plot_map(data_path, map_file):
     crosswalks.plot(ax=ax, color="white")
     traffic_lights = gpd.read_file(map_path, layer="traffic_lights")
     traffic_lights.plot(ax=ax, marker="*", color="red", markersize=0.01)
-    
+
     plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
     ax.set_title(map_file.split("/")[0])
     plt.show()
@@ -108,15 +108,18 @@ def plot_trajectories(data_path, trajectory_folder, trajectory_files, proportion
     ax.set_aspect("equal")
     ax.set_title(trajectory_folder)
     plt.show()
+    plt.savefig("temp.png")
 
 
-def plot_class_proportion(data_path, trajectory_folders, trajectory_files, proportion = None):
+def plot_class_proportion(data_path, trajectory_folders, trajectory_files, proportion=None):
     df_proportion = pd.DataFrame(columns=dynamic_category, index=trajectory_folders)
 
     for i, trajectory_folder in enumerate(trajectory_folders):
         if proportion is not None:
             np.random.shuffle(trajectory_files[i])
-            trajectory_files_subset = trajectory_files[i][: int(len(trajectory_files[i]) * proportion)]
+            trajectory_files_subset = trajectory_files[i][
+                : int(len(trajectory_files[i]) * proportion)
+            ]
         else:
             trajectory_files_subset = trajectory_files[i]
         for trajectory_file in trajectory_files_subset:
@@ -132,23 +135,14 @@ def plot_class_proportion(data_path, trajectory_folders, trajectory_files, propo
                 dict_category = dict(zip(df_category["name"], df_category.index))
 
                 for category in dynamic_category:
-                    cnt = len(df_track[df_track["category_token"] == dict_category[category]])
-                    df_proportion.loc[trajectory_folder][category] = cnt
+                    df_proportion.loc[trajectory_folder][category] = len(
+                        df_track[df_track["category_token"] == dict_category[category]]
+                    )
 
             motion_db.close()
 
     if proportion is None:
-        for row in df_proportion.iterrows():
-            print(
-                "In %s, there are in total %d vehicles, %d bicycles, %d pedestrians, %d generic objects."
-                % (
-                    row[0],
-                    row[1]["vehicle"],
-                    row[1]["bicycle"],
-                    row[1]["pedestrian"],
-                    row[1]["generic_object"],
-                )
-        )
+        print(df_proportion)
 
     df_proportion = df_proportion.div(df_proportion.sum(axis=1), axis=0)
     df_proportion.plot.barh(stacked=True, colormap="Set2", rot=1)
@@ -202,11 +196,18 @@ def plot_mean_speed_distribution(data_path, trajectory_folders, trajectory_files
     plt.show()
 
 
-def plot_speed_distribution(map_boundary, data_path, trajectory_folder, trajectory_files):
+def plot_speed_distribution(
+    map_boundary, data_path, trajectory_folder, trajectory_files, proportion=None
+):
     x_min, x_max, y_min, y_max = map_boundary
     matrix_x = int((x_max - x_min))
     matrix_y = int((y_max - y_min))
     speed_map = np.zeros((matrix_y, matrix_x, 2))
+
+    np.random.shuffle(trajectory_files)
+    cnt = 0
+    if proportion is not None:
+        max_iter = int(len(trajectory_files) * proportion)
 
     for trajectory_file in trajectory_files:
         if trajectory_file[-3:] != ".db":
@@ -232,7 +233,12 @@ def plot_speed_distribution(map_boundary, data_path, trajectory_folder, trajecto
                         row[1]["vx"] ** 2 + row[1]["vy"] ** 2 + row[1]["vz"] ** 2
                     )
                     speed_map[y, x, 1] += 1
+
         motion_db.close()
+        if proportion is not None:
+            cnt += 1
+            if cnt >= max_iter:
+                break
 
     speed_map[:, :, 0] /= speed_map[:, :, 1]
     speed_map = np.flip(speed_map, axis=0)
