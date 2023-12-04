@@ -29,7 +29,7 @@ Here are some basic information about the open trajectory datasets.
 
 | Dataset | Publish | Scenario | # Map | # Trajectory | Duration (h) | Frequency (Hz) |
 | --- | --- | --- | --- | --- | --- | --- |
-| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) |  | Highway, </br> intersection | 2 | 9206 | 2.5 | 10 |
+| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | 2006 | Highway, </br> intersection | 2 | 9206 | 2.5 | 10 |
 | [highD](https://www.highd-dataset.com/) | 2018 |  Highway | 6 | 110K+ | 16.5 | 25 |
 | [inD](https://www.ind-dataset.com/) | 2020 | Intersection | 4 | 11500 | 10 | 25 |
 | [rounD](https://www.round-dataset.com/) | 2020 | Roundabout | 3 | 13746 | 6 | 25 |
@@ -54,7 +54,7 @@ This repository plans to provide SUMO-style road network, lanelet2 style maps, t
 | [uniD](https://www.unid-dataset.com/) | $\surd$ |  || $\surd$ | $\surd$ |
 | [INTERACTION](http://interaction-dataset.com/) | $\surd$ | || $\surd$ | $\surd$ |
 | [NuPlan](https://www.nuscenes.org/nuplan) | $\surd$ |  | | $\surd$ | $\surd$ |
-| [Waymo Open Motion Dataset](https://waymo.com/open/about/) | | |
+| [Waymo Open Motion Dataset](https://waymo.com/open/about/) | | | | Too large to include | $\surd$ |
 | [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | $\surd$ | | $\surd$ | $\surd$ | $\surd$ |
 
 ## Citation
