@@ -71,7 +71,7 @@ def plot_trajectory(folder_name, trajectory_file_path_list, proportion=None):
     ax.set_xlim([-25000, 25000])
     ax.set_ylim([-20000, 20000])
     plt.title(folder_name)
-    plt.legend(markerscale=25)
+    plt.legend(markerscale=5)
     plt.show()
 
 
@@ -154,7 +154,8 @@ def plot_delta_angle_distribution(trajectory_folders, trajectory_file_path_lists
                 last_heading = None
                 for state in track.states:
                     if last_heading is not None:
-                        delta_angles.append([trajectory_folders[i], state.heading - last_heading])
+                        delta_angle = (state.heading - last_heading) / 180 * np.pi
+                        delta_angles.append([trajectory_folders[i], delta_angle])
                     last_heading = state.heading
 
     df = pd.DataFrame(delta_angles, columns=["dataset_folder", "deltaAngle"])
@@ -162,5 +163,5 @@ def plot_delta_angle_distribution(trajectory_folders, trajectory_file_path_lists
         df, col="dataset_folder", col_wrap=2, sharex=True, sharey=False, palette="husl"
     )
     plot.map(sns.kdeplot, "deltaAngle", fill=True, alpha=0.5)
-    # plot.set(xlim=(-np.pi / 2, np.pi / 2))
+    plot.set(xlim=(-np.pi / 2, np.pi / 2))
     plt.show()

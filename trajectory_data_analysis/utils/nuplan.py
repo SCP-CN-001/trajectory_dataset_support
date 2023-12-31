@@ -108,7 +108,6 @@ def plot_trajectories(data_path, trajectory_folder, trajectory_files, proportion
     ax.set_aspect("equal")
     ax.set_title(trajectory_folder)
     plt.show()
-    plt.savefig("temp.png")
 
 
 def plot_class_proportion(data_path, trajectory_folders, trajectory_files, proportion=None):
