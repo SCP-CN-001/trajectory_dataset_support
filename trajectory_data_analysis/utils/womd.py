@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# @File: waymo_motion.py
-# @Description:
+# @File: womd.py
+# @Description: Some visualization functions for Waymo Open Motion Dataset.
 # @Time: 2023/12/01
 # @Author: Yueyuan Li
 
@@ -11,7 +11,6 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import tensorflow as tf
-
 
 from waymo_open_dataset.protos import scenario_pb2
 
