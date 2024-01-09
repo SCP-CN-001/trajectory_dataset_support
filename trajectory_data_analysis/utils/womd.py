@@ -70,7 +70,7 @@ def plot_trajectory(folder_name, trajectory_file_path_list, proportion=None):
     ax.set_xlim([-25000, 25000])
     ax.set_ylim([-20000, 20000])
     plt.title(folder_name)
-    plt.legend(markerscale=5)
+    plt.legend(markerscale=0.5)
     plt.show()
 
 
@@ -80,12 +80,16 @@ def plot_class_proportion(trajectory_folders, trajectory_file_path_lists):
     for i, trajectory_file_path in enumerate(trajectory_file_path_lists):
         dataset = tf.data.TFRecordDataset(trajectory_file_path, compression_type="")
 
-        for data in dataset:
-            proto_string = data.numpy()
-            proto = scenario_pb2.Scenario()
-            proto.ParseFromString(proto_string)
-            for track in proto.tracks:
-                df_proportion.loc[trajectory_folders[i]][categories[track.object_type]] += 1
+        try:
+            for data in dataset:
+                proto_string = data.numpy()
+                proto = scenario_pb2.Scenario()
+                proto.ParseFromString(proto_string)
+                for track in proto.tracks:
+                    df_proportion.loc[trajectory_folders[i]][categories[track.object_type]] += 1
+        except Exception as e:
+            print(e)
+            continue
 
     print(df_proportion.head(6))
     df_proportion = df_proportion.div(df_proportion.sum(axis=1), axis=0)
