@@ -23,9 +23,21 @@ mpl.rcParams.update(
     }
 )
 
-categories = ["vehicle", "bus", "motorcycle", "bicycle", "riderless_bicycle", "pedestrian", "static", "background", "construction", "unknown"]
+categories = [
+    "vehicle",
+    "bus",
+    "motorcycle",
+    "bicycle",
+    "riderless_bicycle",
+    "pedestrian",
+    "static",
+    "background",
+    "construction",
+    "unknown",
+]
 
 # locations = ["austin", "detroit", "miami", "pittsburgh", "palo_alto", "washington_dc"]
+
 
 def plot_class_proportion(folder, sub_folders):
     df_proportion = pd.DataFrame(columns=categories, index=sub_folders)
@@ -36,12 +48,18 @@ def plot_class_proportion(folder, sub_folders):
         sub_sub_folders = os.listdir(sub_folder_path)
         for sub_sub_folder in sub_sub_folders:
             sub_sub_folder_path = os.path.join(sub_folder_path, sub_sub_folder)
-            file_name = [file_name for file_name in os.listdir(sub_sub_folder_path) if ".parquet" in file_name][0]
+            file_name = [
+                file_name
+                for file_name in os.listdir(sub_sub_folder_path)
+                if ".parquet" in file_name
+            ][0]
             file_path = os.path.join(sub_sub_folder_path, file_name)
 
             df_trajectory = pd.read_parquet(file_path, engine="fastparquet")
             for category in categories:
-                df_proportion.loc[sub_folder, category] += len(df_trajectory[df_trajectory["object_type"] == category])
+                df_proportion.loc[sub_folder, category] += len(
+                    df_trajectory[df_trajectory["object_type"] == category]
+                )
 
     print(df_proportion)
     df_proportion = df_proportion.div(df_proportion.sum(axis=1), axis=0)
@@ -56,7 +74,9 @@ def plot_trajectory(folder, city):
     sub_folders = os.listdir(folder)
     for sub_folder in sub_folders:
         sub_folder_path = os.path.join(folder, sub_folder)
-        file_name = [file_name for file_name in os.listdir(sub_folder_path) if ".parquet" in file_name][0]
+        file_name = [
+            file_name for file_name in os.listdir(sub_folder_path) if ".parquet" in file_name
+        ][0]
         file_path = os.path.join(sub_folder_path, file_name)
 
         df_trajectory = pd.read_parquet(file_path, engine="fastparquet")
@@ -67,20 +87,12 @@ def plot_trajectory(folder, city):
             locations.append([line["position_x"], line["position_y"], line["object_type"]])
 
     df = pd.DataFrame(locations, columns=["x", "y", "class"])
-    fig, ax = plt.subplots()
-    fig.set_figwidth(6)
     sns.scatterplot(
-        df,
-        x="x",
-        y="y",
-        hue="class",
-        s=0.05,
-        palette="husl",
-        hue_order=categories,
-        legend=True,
-        ax=ax,
+        df, x="x", y="y", hue="class", s=0.05, palette="husl", hue_order=categories, legend=True
     )
-    plt.legend(bbox_to_anchor=(1.0, 1.0), loc="upper left")
+    plt.legend(bbox_to_anchor=(1.0, 1.0), loc="upper left", markerscale=1)
+    plt.gca().set_aspect("equal")
+    plt.gcf().set_figwidth(6)
     plt.show()
 
 
@@ -93,7 +105,9 @@ def plot_speed_distribution(folder, city, map_range):
 
     for sub_folder in sub_folders:
         sub_folder_path = os.path.join(folder, sub_folder)
-        file_name = [file_name for file_name in os.listdir(sub_folder_path) if ".parquet" in file_name][0]
+        file_name = [
+            file_name for file_name in os.listdir(sub_folder_path) if ".parquet" in file_name
+        ][0]
         file_path = os.path.join(sub_folder_path, file_name)
 
         df_trajectory = pd.read_parquet(file_path, engine="fastparquet")
@@ -103,7 +117,7 @@ def plot_speed_distribution(folder, city, map_range):
         for _, line in df_trajectory.iterrows():
             if line["object_type"] != "vehicle":
                 continue
-            
+
             x = int(line["position_x"] - x_min)
             y = int(line["position_y"] - y_min)
             if x < 0 or x >= matrix_x or y < 0 or y >= matrix_y:
@@ -111,7 +125,7 @@ def plot_speed_distribution(folder, city, map_range):
 
             speed_map[y, x, 0] += np.sqrt(line["velocity_x"] ** 2 + line["velocity_y"] ** 2)
             speed_map[y, x, 1] += 1
-    
+
     speed_map[:, :, 0] /= speed_map[:, :, 1]
     speed_map = np.flip(speed_map, axis=0)
 
@@ -127,6 +141,7 @@ def plot_speed_distribution(folder, city, map_range):
         ]
     )
     plt.gca().set_title(city)
+    plt.gca().set_aspect("equal")
     plt.colorbar(im, cax=cax)
     plt.show()
 
@@ -137,22 +152,23 @@ def plot_mean_speed_distribution(folder):
     sub_folders = os.listdir(folder)
     for sub_folder in sub_folders:
         sub_folder_path = os.path.join(folder, sub_folder)
-        file_name = [file_name for file_name in os.listdir(sub_folder_path) if ".parquet" in file_name][0]
+        file_name = [
+            file_name for file_name in os.listdir(sub_folder_path) if ".parquet" in file_name
+        ][0]
         file_path = os.path.join(sub_folder_path, file_name)
 
+        df_trajectory = pd.read_parquet(file_path, engine="fastparquet")
         city = df_trajectory["city"][0]
 
         df_trajectory = pd.read_parquet(file_path, engine="fastparquet")
-        df_trajectory["speed"] = np.sqrt(df_trajectory["velocity_x"] ** 2 + df_trajectory["velocity_y"] ** 2)
+        df_trajectory["speed"] = np.sqrt(
+            df_trajectory["velocity_x"] ** 2 + df_trajectory["velocity_y"] ** 2
+        )
         df_trajectory_group = df_trajectory.groupby("track_id")
 
         for _, group in df_trajectory_group:
-            speeds.append([
-                group["speed"].mean(),
-                group["object_type"].iloc[0],
-                city
-            ])
-        
+            speeds.append([group["speed"].mean(), group["object_type"].iloc[0], city])
+
     df = pd.DataFrame(speeds, columns=["meanSpeed", "class", "city"])
     plot = sns.FacetGrid(
         df,
@@ -169,6 +185,3 @@ def plot_mean_speed_distribution(folder):
     plot.map(sns.histplot, "meanSpeed", stat="percent", element="step", kde=True)
     plot.add_legend()
     plt.show()
-
-if __name__=="__main__":
-    plot_trajectory("../../trajectory/Argoverse/train", "washington-dc")
