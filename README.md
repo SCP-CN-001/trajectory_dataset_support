@@ -37,8 +37,9 @@ Here are some basic information about the open trajectory datasets.
 | [uniD](https://www.unid-dataset.com/) | 2023 | Intersection | 1 | | | 25 |
 | [INTERACTION](http://interaction-dataset.com/) | 2019 | Merging, </br> roundabout, </br> intersection | 11 | 40054 | 16.5 | 10 |
 | [NuPlan](https://www.nuscenes.org/nuplan) | 2021 | Urban scenarios | 4 | 38M+ | 1312 | 20 |
-| [Waymo Open Motion Dataset](https://waymo.com/open/about/) | 2021 | | 6 | | | 10 |
+| [Waymo Open Motion Dataset v1.2](https://waymo.com/open/about/) | 2021 | Urban scenarios | 6 | | | 10 |
 | [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | 2022 | Parking | 1 | 5188 | 3.5 | 25 |
+| [Argoverse 2](https://www.argoverse.org/av2.html) | 2023 | Urban scenarios | 6 | | 763 | 10 |
 
 ## Working Progress
 
@@ -46,16 +47,17 @@ This repository plans to provide SUMO-style road network, lanelet2 style maps, t
 
 | Dataset | Map images | SUMO </br> road network | [Lanelet2](https://github.com/fzi-forschungszentrum-informatik/Lanelet2) map | Trajectory sample | Trajectory data analysis |
 | --- | --- | --- | --- | --- | --- |
-| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | $\surd$ | | | [official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj) | $\surd$ ([official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj))
-| [highD](https://www.highd-dataset.com/) | $\surd$ | $\surd$ | $\surd$ | $\surd$ | $\surd$ |
-| [inD](https://www.ind-dataset.com/) | $\surd$ | $\surd$ | $\surd$ | $\surd$ | $\surd$ |
-| [rounD](https://www.round-dataset.com/) | $\surd$ | $\surd$ | $\surd$ | $\surd$ | $\surd$ |
-| [exiD](https://www.exid-dataset.com/) | $\surd$ |  | $\surd$ | $\surd$ | $\surd$ |
-| [uniD](https://www.unid-dataset.com/) | $\surd$ |  || $\surd$ | $\surd$ |
-| [INTERACTION](http://interaction-dataset.com/) | $\surd$ | || $\surd$ | $\surd$ |
-| [NuPlan](https://www.nuscenes.org/nuplan) | $\surd$ |  | | $\surd$ | $\surd$ |
-| [Waymo Open Motion Dataset](https://waymo.com/open/about/) | | | | Too large to include | $\surd$ |
-| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | $\surd$ | | $\surd$ | $\surd$ | $\surd$ |
+| [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | :white_check_mark: | | | [official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj) | :white_check_mark: ([official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj))
+| [highD](https://www.highd-dataset.com/) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [inD](https://www.ind-dataset.com/) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [rounD](https://www.round-dataset.com/) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [exiD](https://www.exid-dataset.com/) | :white_check_mark: |  | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [uniD](https://www.unid-dataset.com/) | :white_check_mark: |  || :white_check_mark: | :white_check_mark: |
+| [INTERACTION](http://interaction-dataset.com/) | :white_check_mark: | || :white_check_mark: | :white_check_mark: |
+| [NuPlan](https://www.nuscenes.org/nuplan) | :white_check_mark: |  | | :white_check_mark: | :white_check_mark: |
+| [Waymo Open Motion Dataset](https://waymo.com/open/about/) | :x: | | | :white_check_mark: | :white_check_mark: |
+| [DLP](https://sites.google.com/berkeley.edu/dlp-dataset) | :white_check_mark: | | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| [Argoverse 2](https://www.argoverse.org/av2.html) | | | | :white_check_mark: | :white_check_mark: | 
 
 ## Citation
 
@@ -151,5 +153,13 @@ This repository plans to provide SUMO-style road network, lanelet2 style maps, t
     number={},
     pages={3999-4004},
     doi={10.1109/ITSC55140.2022.9922162}
+}
+
+% Argoverse 2
+@article{wilson2023argoverse,
+  title={Argoverse 2: Next generation datasets for self-driving perception and forecasting},
+  author={Wilson, Benjamin and Qi, William and Agarwal, Tanmay and Lambert, John and Singh, Jagjeet and Khandelwal, Siddhesh and Pan, Bowen and Kumar, Ratnesh and Hartnett, Andrew and Pontes, Jhony Kaesemodel and others},
+  journal={arXiv preprint arXiv:2301.00493},
+  year={2023}
 }
 ```

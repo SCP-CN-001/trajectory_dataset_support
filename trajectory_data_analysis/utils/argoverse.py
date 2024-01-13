@@ -1,7 +1,7 @@
 ##!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # @File: argoverse.py
-# @Description: Some visualization functions for Argoverse Dataset.
+# @Description: Some visualization functions for Argoverse 2 Dataset.
 # @Time: 2024/01/09
 # @Author: Yueyuan Li
 
@@ -35,8 +35,6 @@ categories = [
     "construction",
     "unknown",
 ]
-
-# locations = ["austin", "detroit", "miami", "pittsburgh", "palo_alto", "washington_dc"]
 
 
 def plot_class_proportion(folder, sub_folders):
@@ -87,20 +85,32 @@ def plot_trajectory(folder, city):
             locations.append([line["position_x"], line["position_y"], line["object_type"]])
 
     df = pd.DataFrame(locations, columns=["x", "y", "class"])
+    fig, ax = plt.subplots()
+    fig.set_figwidth(6)
     sns.scatterplot(
-        df, x="x", y="y", hue="class", s=0.05, palette="husl", hue_order=categories, legend=True
+        df,
+        x="x",
+        y="y",
+        hue="class",
+        s=0.05,
+        palette="husl",
+        hue_order=categories,
+        legend=True,
+        ax=ax,
     )
+    ax.set_aspect("equal")
+    ax.set_xlabel(None)
+    ax.set_ylabel(None)
+    plt.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
     plt.legend(bbox_to_anchor=(1.0, 1.0), loc="upper left", markerscale=1)
-    plt.gca().set_aspect("equal")
-    plt.gcf().set_figwidth(6)
     plt.show()
 
 
 def plot_speed_distribution(folder, city, map_range):
     sub_folders = os.listdir(folder)
     x_min, x_max, y_min, y_max = map_range
-    matrix_x = int((x_max - x_min))
-    matrix_y = int((y_max - y_min))
+    matrix_x = int((x_max - x_min) / 10)
+    matrix_y = int((y_max - y_min) / 10)
     speed_map = np.zeros([matrix_y, matrix_x, 2])
 
     for sub_folder in sub_folders:
@@ -118,8 +128,8 @@ def plot_speed_distribution(folder, city, map_range):
             if line["object_type"] != "vehicle":
                 continue
 
-            x = int(line["position_x"] - x_min)
-            y = int(line["position_y"] - y_min)
+            x = int((line["position_x"] - x_min) / 10)
+            y = int((line["position_y"] - y_min) / 10)
             if x < 0 or x >= matrix_x or y < 0 or y >= matrix_y:
                 continue
 
