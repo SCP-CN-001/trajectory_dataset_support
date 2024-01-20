@@ -798,29 +798,6 @@
   <node id='1779697' visible='true' version='1' lat='50.78531336358' lon='6.13111619852' />
   <node id='1779698' visible='true' version='1' lat='50.78526545794' lon='6.13110203768' />
   <node id='1779699' visible='true' version='1' lat='50.78529633706' lon='6.13120672367' />
-  <way id='104204' visible='true' version='1'>
-    <nd ref='103744' />
-    <nd ref='103745' />
-    <tag k='type' v='virtual' />
-  </way>
-  <way id='104264' visible='true' version='1'>
-    <nd ref='103746' />
-    <nd ref='103745' />
-    <tag k='type' v='virtual' />
-  </way>
-  <way id='104764' visible='true' version='1'>
-    <nd ref='1773855' />
-    <nd ref='104633' />
-    <nd ref='103746' />
-    <tag k='type' v='virtual' />
-  </way>
-  <way id='105069' visible='true' version='1'>
-    <nd ref='1773651' />
-    <nd ref='104524' />
-    <nd ref='104542' />
-    <nd ref='103745' />
-    <tag k='type' v='virtual' />
-  </way>
   <way id='102386' visible='true' version='1'>
     <nd ref='1774344' />
     <nd ref='1774340' />
@@ -910,6 +887,29 @@
     <nd ref='1779699' />
     <nd ref='1773783' />
     <nd ref='1779697' />
+    <tag k='type' v='virtual' />
+  </way>
+  <way id='104204' visible='true' version='1'>
+    <nd ref='103744' />
+    <nd ref='103745' />
+    <tag k='type' v='virtual' />
+  </way>
+  <way id='104264' visible='true' version='1'>
+    <nd ref='103746' />
+    <nd ref='103745' />
+    <tag k='type' v='virtual' />
+  </way>
+  <way id='104764' visible='true' version='1'>
+    <nd ref='1773855' />
+    <nd ref='104633' />
+    <nd ref='103746' />
+    <tag k='type' v='virtual' />
+  </way>
+  <way id='105069' visible='true' version='1'>
+    <nd ref='1773651' />
+    <nd ref='104524' />
+    <nd ref='104542' />
+    <nd ref='103745' />
     <tag k='type' v='virtual' />
   </way>
   <way id='1774999' visible='true' version='1'>
@@ -2412,9 +2412,10 @@
     <tag k='subtype' v='dashed' />
     <tag k='type' v='line_thin' />
   </way>
-  <way id='1775228' visible='true' version='1'>
+  <way id='1775228' action='modify' visible='true' version='1'>
     <nd ref='1773639' />
     <nd ref='1773638' />
+    <tag k='subtype' v='dashed' />
     <tag k='type' v='line_thin' />
   </way>
   <way id='1775229' visible='true' version='1'>
@@ -2605,11 +2606,11 @@
     <tag k='subtype' v='dashed' />
     <tag k='type' v='line_thin' />
   </way>
-  <way id='1775261' visible='true' version='1'>
+  <way id='1775261' action='modify' visible='true' version='1'>
     <nd ref='1773747' />
     <nd ref='1773758' />
     <tag k='subtype' v='dashed' />
-    <tag k='type' v='virtual' />
+    <tag k='type' v='line_thin' />
   </way>
   <way id='1775262' visible='true' version='1'>
     <nd ref='1773793' />
@@ -4917,34 +4918,34 @@
     <tag k='subtype' v='walkway' />
     <tag k='type' v='lanelet' />
   </relation>
-  <relation id='1771562' visible='true' version='1'>
+  <relation id='1771562' action='modify' visible='true' version='1'>
     <member type='way' ref='1775249' role='left' />
     <member type='way' ref='1775259' role='right' />
     <tag k='bicycle' v='yes' />
     <tag k='location' v='urban' />
     <tag k='one_way' v='no' />
     <tag k='region' v='a' />
-    <tag k='subtype' v='walkway' />
+    <tag k='subtype' v='crosswalk' />
     <tag k='type' v='lanelet' />
   </relation>
-  <relation id='1771563' visible='true' version='1'>
+  <relation id='1771563' action='modify' visible='true' version='1'>
     <member type='way' ref='1775260' role='left' />
     <member type='way' ref='1775250' role='right' />
     <tag k='bicycle' v='yes' />
     <tag k='location' v='urban' />
     <tag k='one_way' v='no' />
     <tag k='region' v='a' />
-    <tag k='subtype' v='walkway' />
+    <tag k='subtype' v='crosswalk' />
     <tag k='type' v='lanelet' />
   </relation>
-  <relation id='1771564' visible='true' version='1'>
+  <relation id='1771564' action='modify' visible='true' version='1'>
     <member type='way' ref='1775258' role='right' />
     <member type='way' ref='1775261' role='left' />
     <tag k='bicycle' v='yes' />
     <tag k='location' v='urban' />
     <tag k='one_way' v='no' />
     <tag k='region' v='de' />
-    <tag k='subtype' v='walkway' />
+    <tag k='subtype' v='crosswalk' />
     <tag k='type' v='lanelet' />
   </relation>
   <relation id='1771565' visible='true' version='1'>
@@ -5701,7 +5702,7 @@
     <tag k='subtype' v='walkway' />
     <tag k='type' v='lanelet' />
   </relation>
-  <relation id='1772547' visible='true' version='1'>
+  <relation id='1772547' action='modify' visible='true' version='1'>
     <member type='way' ref='1775179' role='outer' />
     <member type='way' ref='1775184' role='outer' />
     <member type='way' ref='1775180' role='outer' />
@@ -5712,7 +5713,7 @@
     <member type='way' ref='1775209' role='outer' />
     <tag k='location' v='urban' />
     <tag k='region' v='de' />
-    <tag k='subtype' v='freespace' />
+    <tag k='subtype' v='walkway' />
     <tag k='type' v='multipolygon' />
   </relation>
 </osm>

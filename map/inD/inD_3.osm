@@ -2257,14 +2257,14 @@
     <tag k='subtype' v='crosswalk' />
     <tag k='type' v='lanelet' />
   </relation>
-  <relation id='1772227' visible='true' version='1'>
+  <relation id='1772227' action='modify' visible='true' version='1'>
     <member type='way' ref='1784163' role='left' />
     <member type='way' ref='1784157' role='right' />
     <tag k='bicycle' v='yes' />
     <tag k='location' v='urban' />
     <tag k='one_way' v='no' />
     <tag k='region' v='de' />
-    <tag k='subtype' v='walkway' />
+    <tag k='subtype' v='crosswalk' />
     <tag k='type' v='lanelet' />
   </relation>
   <relation id='1772228' visible='true' version='1'>
