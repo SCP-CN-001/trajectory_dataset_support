@@ -2859,7 +2859,7 @@
     <member type='way' ref='10122' role='outer' />
     <member type='way' ref='10045' role='outer' />
     <tag k='location' v='urban' />
-    <tag k='region' v='de' />
+    <tag k='region' v='us' />
     <tag k='subtype' v='freespace' />
     <tag k='type' v='multipolygon' />
   </relation>
@@ -2867,7 +2867,7 @@
     <member type='way' ref='10055' role='outer' />
     <member type='way' ref='10087' role='outer' />
     <member type='way' ref='1781413' role='outer' />
-    <tag k='region' v='de' />
+    <tag k='region' v='us' />
     <tag k='subtype' v='parking' />
     <tag k='type' v='multipolygon' />
   </relation>
@@ -2880,7 +2880,7 @@
     <member type='way' ref='10077' role='outer' />
     <member type='way' ref='10083' role='outer' />
     <tag k='location' v='urban' />
-    <tag k='region' v='de' />
+    <tag k='region' v='us' />
     <tag k='subtype' v='freespace' />
     <tag k='type' v='multipolygon' />
   </relation>

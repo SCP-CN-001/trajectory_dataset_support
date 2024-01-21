@@ -167,17 +167,6 @@
   <node id='1164' visible='true' version='1' lat='0.00864815885' lon='0.00975729356' />
   <node id='1165' visible='true' version='1' lat='0.00845994653' lon='0.00977799324' />
   <node id='1166' visible='true' version='1' lat='0.00873723079' lon='0.00899505307' />
-  <way id='1781546' visible='true' version='1'>
-    <nd ref='1071' />
-    <nd ref='1110' />
-    <tag k='subtype' v='solid' />
-    <tag k='type' v='line_thin' />
-  </way>
-  <way id='1781548' visible='true' version='1'>
-    <nd ref='1074' />
-    <nd ref='1121' />
-    <tag k='type' v='guard_rail' />
-  </way>
   <way id='10000' visible='true' version='1'>
     <nd ref='1098' />
     <nd ref='1038' />
@@ -658,41 +647,17 @@
     <nd ref='1150' />
     <tag k='type' v='guard_rail' />
   </way>
-  <relation id='1771803' visible='true' version='1'>
-    <member type='way' ref='10001' role='outer' />
-    <member type='way' ref='10026' role='outer' />
-    <member type='way' ref='10056' role='outer' />
-    <tag k='location' v='urban' />
-    <tag k='region' v='de' />
-    <tag k='subtype' v='keepout' />
-    <tag k='type' v='multipolygon' />
-  </relation>
-  <relation id='1771807' visible='true' version='1'>
-    <member type='way' ref='1781548' role='outer' />
-    <member type='way' ref='10057' role='outer' />
-    <member type='way' ref='10061' role='outer' />
-    <member type='way' ref='10039' role='outer' />
-    <member type='way' ref='10058' role='outer' />
-    <member type='way' ref='10040' role='outer' />
-    <member type='way' ref='10050' role='outer' />
-    <member type='way' ref='10010' role='outer' />
-    <member type='way' ref='1781546' role='outer' />
-    <member type='way' ref='10060' role='outer' />
-    <tag k='location' v='urban' />
-    <tag k='region' v='de' />
-    <tag k='subtype' v='keepout' />
-    <tag k='type' v='multipolygon' />
-  </relation>
-  <relation id='1771810' visible='true' version='1'>
-    <member type='way' ref='10059' role='outer' />
-    <member type='way' ref='10023' role='outer' />
-    <member type='way' ref='10014' role='outer' />
-    <member type='way' ref='10025' role='outer' />
-    <tag k='location' v='urban' />
-    <tag k='region' v='de' />
-    <tag k='subtype' v='freespace' />
-    <tag k='type' v='multipolygon' />
-  </relation>
+  <way id='1781546' visible='true' version='1'>
+    <nd ref='1071' />
+    <nd ref='1110' />
+    <tag k='subtype' v='solid' />
+    <tag k='type' v='line_thin' />
+  </way>
+  <way id='1781548' visible='true' version='1'>
+    <nd ref='1074' />
+    <nd ref='1121' />
+    <tag k='type' v='guard_rail' />
+  </way>
   <relation id='30000' visible='true' version='1'>
     <member type='way' ref='10018' role='left' />
     <member type='way' ref='10030' role='right' />
@@ -1187,5 +1152,40 @@
     <tag k='sign_type' v='80kmh' />
     <tag k='subtype' v='speed_limit' />
     <tag k='type' v='regulatory_element' />
+  </relation>
+  <relation id='1771803' visible='true' version='1'>
+    <member type='way' ref='10001' role='outer' />
+    <member type='way' ref='10026' role='outer' />
+    <member type='way' ref='10056' role='outer' />
+    <tag k='location' v='urban' />
+    <tag k='region' v='cn' />
+    <tag k='subtype' v='keepout' />
+    <tag k='type' v='multipolygon' />
+  </relation>
+  <relation id='1771807' visible='true' version='1'>
+    <member type='way' ref='1781548' role='outer' />
+    <member type='way' ref='10057' role='outer' />
+    <member type='way' ref='10061' role='outer' />
+    <member type='way' ref='10039' role='outer' />
+    <member type='way' ref='10058' role='outer' />
+    <member type='way' ref='10040' role='outer' />
+    <member type='way' ref='10050' role='outer' />
+    <member type='way' ref='10010' role='outer' />
+    <member type='way' ref='1781546' role='outer' />
+    <member type='way' ref='10060' role='outer' />
+    <tag k='location' v='urban' />
+    <tag k='region' v='cn' />
+    <tag k='subtype' v='keepout' />
+    <tag k='type' v='multipolygon' />
+  </relation>
+  <relation id='1771810' visible='true' version='1'>
+    <member type='way' ref='10059' role='outer' />
+    <member type='way' ref='10023' role='outer' />
+    <member type='way' ref='10014' role='outer' />
+    <member type='way' ref='10025' role='outer' />
+    <tag k='location' v='urban' />
+    <tag k='region' v='cn' />
+    <tag k='subtype' v='freespace' />
+    <tag k='type' v='multipolygon' />
   </relation>
 </osm>
