@@ -37,7 +37,7 @@ class Vehicles:
                 departPos=line["departPos"],
                 departSpeed=line["departSpeed"],
                 arrivalLane=line["arrivalLane"],
-                arrivalPos=line["arrivalPos"]
+                arrivalPos=line["arrivalPos"],
                 # arrivalSpeed=line["arrivalSpeed"]
             )
             traci.vehicle.setLength(vehID=veh_id, length=line["length"])
