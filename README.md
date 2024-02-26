@@ -8,6 +8,8 @@ This repository provides **third-party** map data and script-based support for o
 
 Due to licensing constraints associated with the open datasets, this repository is unable to distribute the complete trajectory datasets. Still, we provide a representative data sample, comprising less than 5% of the original data, to showcase the data format and dataset folder structure. For access to the complete datasets, please reach out to the respective dataset owners to request download links.
 
+> Please raise issues in [this page](https://github.com/WoodOxen/tactics2d/issues) because this repository is a sub project of Tactics2D. You are welcome to join our [discord community](https://discord.com/widget?id=1209363816912126003&theme=dark) if you have more questions about this repository.
+
 ## Folder Structure
 
 ```shell
