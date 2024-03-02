@@ -1,0 +1,2 @@
+*.gpkg filter=lfs diff=lfs merge=lfs -text
+map/NuPlan/*.gpkg filter=lfs diff=lfs merge=lfs -text
