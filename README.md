@@ -50,11 +50,11 @@ This repository plans to provide SUMO-style road network, lanelet2 style maps, t
 | Dataset | Map images | SUMO </br> road network | [Lanelet2](https://github.com/fzi-forschungszentrum-informatik/Lanelet2) map | Trajectory sample | Trajectory data analysis |
 | --- | --- | --- | --- | --- | --- |
 | [NGSIM](https://ops.fhwa.dot.gov/trafficanalysistools/ngsim.htm) | :white_check_mark: | | | [official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj) | :white_check_mark: ([official](https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj))
-| [highD](https://www.highd-dataset.com/) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [inD](https://www.ind-dataset.com/) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [rounD](https://www.round-dataset.com/) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [exiD](https://www.exid-dataset.com/) | :white_check_mark: |  | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| [uniD](https://www.unid-dataset.com/) | :white_check_mark: |  || :white_check_mark: | :white_check_mark: |
+| [highD](https://www.highd-dataset.com/) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: | :white_check_mark: |
+| [inD](https://www.ind-dataset.com/) | :white_check_mark: | :white_check_mark: | | :x: | :white_check_mark: |
+| [rounD](https://www.round-dataset.com/) | :white_check_mark: | :white_check_mark: |  | :x: | :white_check_mark: |
+| [exiD](https://www.exid-dataset.com/) | :white_check_mark: |  |  | :x: | 
+| [uniD](https://www.unid-dataset.com/) | :white_check_mark: |  || :x: | |
 | [INTERACTION](http://interaction-dataset.com/) | :white_check_mark: | || :white_check_mark: | :white_check_mark: |
 | [NuPlan](https://www.nuscenes.org/nuplan) | :white_check_mark: |  | | :white_check_mark: | :white_check_mark: |
 | [Waymo Open Motion Dataset](https://waymo.com/open/about/) | :x: | | | :white_check_mark: | :white_check_mark: |
