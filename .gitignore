@@ -4,6 +4,14 @@
 trajectory_data_analysis/cache/
 trajectory/
 trajectory_sample/DLP
+trajectory_sample/highD
+trajectory_sample/inD
+trajectory_sample/rounD
+trajectory_sample/exiD
+trajectory_sample/uniD
+map/exiD
+map/inD/*.osm
+map/rounD/*.osm
 
 # Gitignore Template for Python
 # Byte-compiled / optimized / DLL files
